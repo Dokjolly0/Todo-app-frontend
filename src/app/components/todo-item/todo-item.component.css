@@ -1,0 +1,69 @@
+.todo-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 300px; /* Imposta un'altezza fissa se necessario */
+  box-sizing: border-box;
+}
+
+.header {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.info {
+  margin: 16px 0;
+}
+
+.info p {
+  margin: 4px 0;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.actions button {
+  flex: 1;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 4px;
+}
+
+.actions button:hover {
+  background-color: #0056b3;
+}
+
+.actions button:first-child {
+  margin-right: 8px;
+}
+
+.actions button:last-child {
+  margin-left: 8px;
+}

@@ -1,0 +1,20 @@
+/* not-found.component.css */
+.not-found {
+  text-align: center;
+  padding: 50px;
+}
+
+.not-found h1 {
+  font-size: 100px;
+  margin: 0;
+}
+
+.not-found p {
+  font-size: 24px;
+}
+
+.not-found a {
+  font-size: 18px;
+  color: #4285f4;
+  text-decoration: none;
+}

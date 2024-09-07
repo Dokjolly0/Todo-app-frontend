@@ -1,0 +1,50 @@
+<div class="popup" (click)="closePopup()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <h1>Aggiungi Todo</h1>
+    <form (ngSubmit)="onSubmit()" #todoForm="ngForm">
+      <div>
+        <label for="title">Titolo:</label>
+        <input
+          id="title"
+          name="title"
+          [(ngModel)]="todo.title"
+          placeholder="Inserisci il titolo"
+        />
+      </div>
+
+      <div>
+        <label for="description">Descrizione:</label>
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="todo.description"
+          placeholder="Ancora da implementare"
+          disabled
+        ></textarea>
+      </div>
+
+      <div>
+        <label for="dueDate">Data di Scadenza:</label>
+        <input
+          id="dueDate"
+          name="dueDate"
+          [(ngModel)]="todo.dueDate"
+          type="date"
+        />
+      </div>
+
+      <div>
+        <label for="assignee">Assegna a:</label>
+        <select id="assignee" name="assignee" [(ngModel)]="todo.assignee">
+          <option value="" selected>Seleziona una persona</option>
+          <option *ngFor="let person of persons" [value]="person">
+            {{ person }}
+          </option>
+        </select>
+      </div>
+
+      <button type="submit">Aggiungi</button>
+      <button type="button" (click)="closePopup()">Annulla</button>
+    </form>
+  </div>
+</div>

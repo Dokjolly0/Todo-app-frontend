@@ -1,0 +1,51 @@
+<div class="body">
+  <div class="login-box">
+    <div class="login-header">
+      <header>Login</header>
+    </div>
+    <div class="input-box">
+      <input
+        type="email"
+        class="input-field"
+        placeholder="Username"
+        [(ngModel)]="username"
+        autocomplete="off"
+        required
+      />
+    </div>
+    <div class="input-box">
+      <input
+        type="password"
+        class="input-field"
+        placeholder="Password"
+        [(ngModel)]="password"
+        autocomplete="off"
+        required
+        id="password"
+      />
+      <i
+        class="material-icons toggle-password"
+        (click)="togglePasswordVisibility()"
+        >visibility</i
+      >
+      <!-- Icona occhio -->
+    </div>
+    <div class="forgot">
+      <section>
+        <input type="checkbox" id="check" class="custom-checkbox" />
+        <label for="check" class="custom-label"></label>
+        <span class="label-text">Remember</span>
+      </section>
+      <section>
+        <a href="/">Forgot password</a>
+      </section>
+    </div>
+    <div class="input-submit">
+      <button class="submit-btn" id="submit" (click)="login()"></button>
+      <label for="submit">Login</label>
+    </div>
+    <div class="sign-up-link">
+      <p>Don't have account? <a href="/signup">Sign Up</a></p>
+    </div>
+  </div>
+</div>

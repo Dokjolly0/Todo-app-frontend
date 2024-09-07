@@ -1,0 +1,30 @@
+<div class="todo-item">
+  <div class="header">
+    <h3>{{ todo.title }}</h3>
+  </div>
+  <div class="info">
+    <p><strong>Due Date:</strong> {{ todo.dueDate }}</p>
+    <p>
+      <strong>Created By:</strong>
+      <img
+        [src]="todo.createdBy.picture"
+        alt="{{ todo.createdBy.fullName }}"
+        class="avatar"
+      />
+      {{ todo.createdBy.fullName }}
+    </p>
+    <p>
+      <strong>Assigned To:</strong>
+      <img
+        [src]="todo.assignedTo?.picture"
+        alt="{{ todo.assignedTo?.fullName }}"
+        class="avatar"
+      />
+      {{ todo.assignedTo?.fullName }}
+    </p>
+  </div>
+  <div class="actions">
+    <button (click)="onEdit()">Edit</button>
+    <button (click)="onDelete()">Delete</button>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+<div class="body">
+  <div class="login-box">
+    <div class="login-header">
+      <header>Register</header>
+    </div>
+    <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+      <div class="input-box">
+        <div *ngIf="registerForm.submitted && !firstName" class="error-message">
+          Name is required
+        </div>
+        <input
+          type="text"
+          class="input-field"
+          placeholder="Name"
+          [(ngModel)]="firstName"
+          name="firstName"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div class="input-box">
+        <div *ngIf="registerForm.submitted && !lastName" class="error-message">
+          Surname is required
+        </div>
+        <input
+          type="text"
+          class="input-field"
+          placeholder="Surname"
+          [(ngModel)]="lastName"
+          name="lastName"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div class="input-box">
+        <div
+          *ngIf="(registerForm.submitted && !picture) || !validUrlPicture"
+          class="error-message"
+        >
+          Picture URL is required and must be a url (https://www.example.com)
+        </div>
+        <input
+          type="url"
+          class="input-field"
+          placeholder="Picture"
+          [(ngModel)]="picture"
+          name="picture"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div class="input-box">
+        <div
+          *ngIf="(registerForm.submitted && !username) || !validEmailUsername"
+          class="error-message"
+        >
+          Username is required and must be a email (tryal&#64;user.com)
+        </div>
+        <input
+          type="email"
+          class="input-field"
+          placeholder="Username"
+          [(ngModel)]="username"
+          name="username"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div class="input-box">
+        <div
+          *ngIf="
+            (registerForm.submitted && !password) ||
+            (registerForm.submitted && password.length < 8)
+          "
+          class="error-message"
+        >
+          Password is required and must be at least 8 character
+        </div>
+        <input
+          type="password"
+          class="input-field"
+          placeholder="Password"
+          [(ngModel)]="password"
+          name="password"
+          autocomplete="off"
+          required
+          id="password"
+        />
+        <i
+          class="material-icons toggle-password"
+          (click)="togglePasswordVisibility()"
+          >visibility</i
+        >
+      </div>
+      <div class="input-box">
+        <div
+          *ngIf="
+            (registerForm.submitted && !checkPassword) ||
+            (registerForm.submitted && checkPassword.length < 8) ||
+            password !== checkPassword
+          "
+          class="error-message"
+        >
+          {{ getErrorMessages() }}
+        </div>
+        <input
+          type="password"
+          class="input-field"
+          placeholder="Check password"
+          [(ngModel)]="checkPassword"
+          name="checkPassword"
+          autocomplete="off"
+          required
+          id="check-password"
+        />
+        <i
+          class="material-icons toggle-password"
+          (click)="toggleCheckPasswordVisibility()"
+          >visibility</i
+        >
+      </div>
+      <div class="input-submit">
+        <button type="submit" class="submit-btn" id="submit">Sign Up</button>
+      </div>
+      <div class="sign-up-link">
+        <p>Have an account? <a href="/signin">Login</a></p>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,116 @@
+/* Stile della navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f7f7;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Stile per il nome dell'app */
+.navbar .app-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4285f4;
+}
+.navbar .app-name a {
+  text-decoration: none;
+  color: #4285f4;
+}
+
+/* .navbar{ New css
+  .app-name{
+    font-size: 24px;
+    font-weight: bold;
+    color: #4285f4;
+    a{
+      text-decoration: none;
+      color: #4285f4;
+    }
+  }
+} */
+
+/* Stile per il container del dashboard todo */
+.todo-dashboard-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Stile per la sezione utente */
+.navbar .user-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Stile per il nome utente */
+.navbar .user-section .username {
+  margin-right: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Stile per l'avatar */
+.user-icon-container {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+.user-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
+.user-icon {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #4285f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Stile per il menu a tendina */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  z-index: 1000;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Classe per mostrare il menu */
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}

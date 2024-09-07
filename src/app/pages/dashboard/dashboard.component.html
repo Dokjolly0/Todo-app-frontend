@@ -1,0 +1,15 @@
+<app-nav-bar></app-nav-bar>
+
+<!-- Popup -->
+<app-add-todo
+  *ngIf="showPopup"
+  (close)="closePopup()"
+  (addTodo)="handleAddTodo($event)"
+></app-add-todo>
+
+<main>
+  <app-todo-item></app-todo-item>
+  <app-todo-item></app-todo-item>
+  <app-todo-item></app-todo-item>
+  <app-todo-item></app-todo-item>
+</main>
