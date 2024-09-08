@@ -30,3 +30,7 @@
 .add-todo-btn:hover {
   background-color: #357ae8;
 }
+
+label input[type="checkbox"] {
+  cursor: pointer;
+}

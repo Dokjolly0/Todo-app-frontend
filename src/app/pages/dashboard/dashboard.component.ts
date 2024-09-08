@@ -40,7 +40,7 @@ export class DashboardComponent {
   // Gestisce la ricerca
   handleSearchChange(searchTerm: string) {
     if (searchTerm.trim() === '') {
-      this.getTodo(this.showUncompletedOnly).then((todos) => {
+      this.getTodo(!this.showUncompletedOnly).then((todos) => {
         this.todos = todos;
       });
       return;
@@ -77,27 +77,3 @@ export class DashboardComponent {
     this.todos.push(todo);
   }
 }
-
-// getTodo() {
-//   // const token = this.token;
-
-//   // this.todoService.getTodo(token!, true).subscribe(
-//   //   (response: Todo[]) => {
-//   //     this.todos = response;
-//   //   },
-//   //   (error: any) => {
-//   //     console.error('Errore durante il recupero dei todo:', error);
-//   //   }
-//   // );
-
-//   return this.todoService.getTodo(this.token!, true).toPromise();
-// }
-
-// ngOnInit(): void {
-//   // this.getTodo();
-//   // console.log('Dashboard: ' + this.todos);
-//   this.getTodo().then((todos) => {
-//     //console.log('Todos caricati:', todos);
-//     this.todos = todos;
-//   });
-// }

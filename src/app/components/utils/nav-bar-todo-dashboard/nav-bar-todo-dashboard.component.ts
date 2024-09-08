@@ -21,11 +21,10 @@ export class NavBarTodoDashboardComponent {
   showIncompleteOnly: boolean = true; // Checkbox di default true (mostra solo incompleti)
 
   onSearchChange() {
-    if (this.showIncompleteOnly) {
-      this.showIncompleteOnly = false;
-      this.incompleteFilterChange.emit(this.showIncompleteOnly); // Emetti il nuovo stato della checkbox
-    }
-
+    // if (this.showIncompleteOnly) {
+    //   this.showIncompleteOnly = false;
+    //   this.incompleteFilterChange.emit(this.showIncompleteOnly); // Emetti il nuovo stato della checkbox
+    // }
     this.searchChange.emit(this.inputSearch); // Emmetti il valore della ricerca come stringa
   }
 
