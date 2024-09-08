@@ -1,3 +1,7 @@
+h3 {
+  color: red;
+}
+
 .todo-item {
   border: 1px solid #ddd;
   border-radius: 8px;

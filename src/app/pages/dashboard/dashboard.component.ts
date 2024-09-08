@@ -29,14 +29,6 @@ export class DashboardComponent {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // document
-    //   .getElementById('add-todo-btn')
-    //   ?.addEventListener('click', function () {
-    //     this.addTodoPopup;
-    //   });
-  }
-
   // Recupera i todo basati sul valore della checkbox
   getTodo(showUncompletedOnly: boolean) {
     // Se showUncompletedOnly è true, vogliamo solo gli incompleti

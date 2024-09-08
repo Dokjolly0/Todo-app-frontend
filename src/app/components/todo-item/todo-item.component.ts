@@ -21,14 +21,16 @@ export class TodoItemComponent {
   ngOnInit(): void {
     if (this.todo.dueDate) {
       this.todo.dueDate = this.fixDate(this.todo.dueDate);
+      this.todo.creationDate = this.fixDate(this.todo.creationDate!);
     }
   }
 
   fixDate(todoDate: Date | string) {
     const date = new Date(todoDate);
-    const day = String(date.getDate()).padStart(2, '0'); // Aggiungi uno zero iniziale se necessario
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // I mesi sono 0-indicizzati
-    const year = date.getFullYear();
+    const day = String(date.getDate()).padStart(2, '0'); // Usa getDate per il tempo locale
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Usa getMonth per il tempo locale
+    const year = date.getFullYear(); // Usa getFullYear per il tempo locale
+    //console.log(`${day}/${month}/${year} -> ${todoDate}`);
     return `${day}/${month}/${year}`;
   }
 
