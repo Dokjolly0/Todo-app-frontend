@@ -35,14 +35,13 @@ export class TodoItemComponent {
   }
 
   onToggleComplete() {
-    const checkboxComplete = document.getElementById(
-      'completed'
-    ) as HTMLInputElement;
-    const completed = checkboxComplete.checked;
+    // Inverti lo stato attuale del todo
+    const completed = !this.todo.completed;
 
     this.todoService.checkTodo(this.token!, this.todo.id!, completed).subscribe(
       (response) => {
         this.todo.completed = completed; // Aggiorna localmente lo stato
+        console.log(`Todo fleggato ${completed}:`, response);
       },
       (error) => {
         console.error('Errore durante il completamento del todo:', error);
