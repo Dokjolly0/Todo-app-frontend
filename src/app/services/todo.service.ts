@@ -88,7 +88,8 @@ export class TodoService {
     const url = `http://localhost:3000/api/todos/title/${title}`;
 
     // Esegui la richiesta GET per ottenere i todo con il titolo specificato
-    return this.http.get(url, { headers });
+    // return this.http.get(url, { headers });
+    return this.http.get<Todo[]>(url, { headers }); // Specifica il tipo di ritorno
   }
 
   getById(token: string, id: string) {

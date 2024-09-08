@@ -4,7 +4,11 @@
 
   <!-- Ricerca todo e add button -->
   <div class="todo-dashboard-container">
-    <app-nav-bar-todo-dashboard [todos]="todos"></app-nav-bar-todo-dashboard>
+    <app-nav-bar-todo-dashboard
+      [todos]="todos"
+      (searchChange)="forwardSearchChange($event)"
+    >
+    </app-nav-bar-todo-dashboard>
   </div>
 
   <!-- Sezione utente -->

@@ -4,7 +4,15 @@
     class="search-bar"
     placeholder="Cerca todo..."
     [(ngModel)]="inputSearch"
-    (ngModelChange)="onSearchChange($event)"
+    (input)="onSearchChange()"
   />
   <button class="add-todo-btn">Aggiungi todo</button>
+  <label>
+    <input
+      type="checkbox"
+      [(ngModel)]="showIncompleteOnly"
+      (change)="onSearchChange()"
+    />
+    Solo incompleti
+  </label>
 </div>

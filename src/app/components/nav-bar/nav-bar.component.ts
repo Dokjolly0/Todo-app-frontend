@@ -1,4 +1,10 @@
-import { Component, HostListener, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../entity/user.entity';
@@ -16,6 +22,7 @@ export class NavBarComponent {
   userInitials: string = ''; //Variabile che controlla le iniziali di nome e cognome
   isDropdownOpen: boolean = false; //Variabile che permette di controllare se il menu è aperto o chiuso
   useDefaultAvatar: boolean = false;
+  @Output() searchChange = new EventEmitter<string>();
   user: User = {
     firstName: '',
     lastName: '',
@@ -57,5 +64,9 @@ export class NavBarComponent {
     if (!target.closest('.user-section')) {
       this.isDropdownOpen = false;
     }
+  }
+
+  forwardSearchChange(searchTerm: string) {
+    this.searchChange.emit(searchTerm); // Passa il valore di ricerca al componente padre
   }
 }

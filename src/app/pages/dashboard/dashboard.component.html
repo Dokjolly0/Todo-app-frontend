@@ -1,4 +1,5 @@
-<app-nav-bar [todos]="todos"></app-nav-bar>
+<app-nav-bar [todos]="todos" (searchChange)="handleSearchChange($event)">
+</app-nav-bar>
 
 <!-- Popup -->
 <app-add-todo

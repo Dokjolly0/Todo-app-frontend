@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
 import { AuthService } from '../../services/auth.service';
 import { Todo } from '../../entity/todo.entity';
@@ -18,10 +18,8 @@ export class DashboardComponent {
   token = this.authService.getToken();
 
   ngOnInit(): void {
-    // this.getTodo();
-    // console.log('Dashboard: ' + this.todos);
     this.getTodo().then((todos) => {
-      console.log('Todos caricati:', todos);
+      //console.log('Todos caricati:', todos);
       this.todos = todos;
     });
   }
@@ -38,18 +36,25 @@ export class DashboardComponent {
   }
 
   getTodo() {
-    // const token = this.token;
-
-    // this.todoService.getTodo(token!, true).subscribe(
-    //   (response: Todo[]) => {
-    //     this.todos = response;
-    //   },
-    //   (error: any) => {
-    //     console.error('Errore durante il recupero dei todo:', error);
-    //   }
-    // );
-
     return this.todoService.getTodo(this.token!, true).toPromise();
+  }
+
+  handleSearchChange(searchTerm: string) {
+    if (searchTerm.trim() === '') {
+      this.getTodo().then((todos) => {
+        //console.log('Todos caricati:', todos);
+        this.todos = todos;
+      });
+      return;
+    }
+    this.todoService.getTodoByTitle(this.token!, searchTerm).subscribe(
+      (todos: Todo[]) => {
+        this.todos = todos;
+      },
+      (error: any) => {
+        console.error('Errore durante la ricerca dei todos:', error);
+      }
+    );
   }
 
   openPopup() {
@@ -65,3 +70,27 @@ export class DashboardComponent {
     //console.log('Todo aggiunto:', todo);
   }
 }
+
+// getTodo() {
+//   // const token = this.token;
+
+//   // this.todoService.getTodo(token!, true).subscribe(
+//   //   (response: Todo[]) => {
+//   //     this.todos = response;
+//   //   },
+//   //   (error: any) => {
+//   //     console.error('Errore durante il recupero dei todo:', error);
+//   //   }
+//   // );
+
+//   return this.todoService.getTodo(this.token!, true).toPromise();
+// }
+
+// ngOnInit(): void {
+//   // this.getTodo();
+//   // console.log('Dashboard: ' + this.todos);
+//   this.getTodo().then((todos) => {
+//     //console.log('Todos caricati:', todos);
+//     this.todos = todos;
+//   });
+// }
