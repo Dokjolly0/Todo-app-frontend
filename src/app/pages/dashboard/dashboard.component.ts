@@ -16,11 +16,11 @@ export class DashboardComponent {
   addTodoPopup = false;
   todos: Todo[] = [];
   token = this.authService.getToken();
-  showUncompletedOnly = false; // La checkbox è di default falsa (mostra tutti)
+  showUncompletedOnly = true; // Di default, mostra solo i non completati (checkbox fleggata)
 
   ngOnInit(): void {
     // Alla prima visualizzazione, carica tutti i todo (completati e non)
-    this.getTodo(false).then((todos) => {
+    this.getTodo(!this.showUncompletedOnly).then((todos) => {
       this.todos = todos;
     });
 
@@ -31,10 +31,9 @@ export class DashboardComponent {
 
   // Recupera i todo basati sul valore della checkbox
   getTodo(showUncompletedOnly: boolean) {
-    // Se showUncompletedOnly è true, vogliamo solo gli incompleti
-    // Altrimenti, vogliamo tutti i todo
+    // Se showUncompletedOnly è true, vogliamo solo gli incompleti // Altrimenti, vogliamo tutti i todo
     return this.todoService
-      .getTodo(this.token!, !showUncompletedOnly)
+      .getTodo(this.token!, showUncompletedOnly)
       .toPromise();
   }
 
@@ -46,6 +45,7 @@ export class DashboardComponent {
       });
       return;
     }
+
     this.todoService.getTodoByTitle(this.token!, searchTerm).subscribe(
       (todos: Todo[]) => {
         this.todos = todos;
@@ -57,16 +57,10 @@ export class DashboardComponent {
   }
 
   // Gestisce il cambiamento della checkbox
-  handleIncompleteFilterChange(showIncompleteOnly: boolean) {
-    this.showUncompletedOnly = showIncompleteOnly;
+  handleIncompleteFilterChange() {
+    this.showUncompletedOnly = !this.showUncompletedOnly; // Cambia il valore in base allo stato della checkbox
     // Carica i todo basati sul valore della checkbox
-    this.getTodo(this.showUncompletedOnly).then((todos) => {
-      console.log(
-        'Todos caricati:',
-        todos,
-        'showIncompleteOnly:',
-        showIncompleteOnly
-      );
+    this.getTodo(!this.showUncompletedOnly).then((todos) => {
       this.todos = todos;
     });
   }

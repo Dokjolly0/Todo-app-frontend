@@ -18,7 +18,7 @@ export class NavBarTodoDashboardComponent {
   @Output() searchChange = new EventEmitter<string>(); // EventEmitter di tipo string
   @Output() incompleteFilterChange = new EventEmitter<boolean>(); // Per il filtro incompleti
   inputSearch: string = '';
-  showIncompleteOnly: boolean = false;
+  showIncompleteOnly: boolean = true; // Checkbox di default true (mostra solo incompleti)
 
   onSearchChange() {
     if (this.showIncompleteOnly) {
