@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
 import { AuthService } from '../../services/auth.service';
 import { Todo } from '../../entity/todo.entity';
@@ -23,6 +23,18 @@ export class DashboardComponent {
     this.getTodo(false).then((todos) => {
       this.todos = todos;
     });
+
+    document.getElementById('add-todo-btn')?.addEventListener('click', () => {
+      this.addTodoPopup = !this.addTodoPopup;
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // document
+    //   .getElementById('add-todo-btn')
+    //   ?.addEventListener('click', function () {
+    //     this.addTodoPopup;
+    //   });
   }
 
   // Recupera i todo basati sul valore della checkbox
