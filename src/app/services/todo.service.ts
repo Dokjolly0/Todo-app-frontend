@@ -18,7 +18,7 @@ export class TodoService {
     let url = 'http://localhost:3000/api/todos';
     if (completed) {
       // Aggiungi il parametro completed all'URL quando è true
-      url += '?completed=true';
+      url += '?showCompleted=true';
     }
 
     // Esegui la richiesta GET utilizzando l'URL costruito
@@ -28,8 +28,13 @@ export class TodoService {
   addTodo(token: string, todo: Todo) {
     // Costruisci l'intestazione della richiesta HTTP con il token
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    // Esegui la richiesta POST per aggiungere un nuovo todo
-    return this.http.post('http://localhost:3000/api/todos', todo, { headers });
+    const newTodo = {
+      ...todo,
+      assignedTo: todo.assignedTo ? todo.assignedTo.id : undefined, // Solo l'ID
+    };
+    return this.http.post('http://localhost:3000/api/todos', newTodo, {
+      headers,
+    });
   }
 
   setSharedData(data: any) {
@@ -66,9 +71,12 @@ export class TodoService {
     return this.http.get(url, { headers, params });
   }
 
-  checkTodo(token: string, id: string) {
+  checkTodo(token: string, id: string, completed: boolean) {
+    let completed_param = '';
+    if (completed === true) completed_param = 'check';
+    else completed_param = 'uncheck';
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:3000/api/todos/${id}/check`;
+    const url = `http://localhost:3000/api/todos/${id}/${completed_param}`;
 
     // Esegui la richiesta PATCH per contrassegnare il todo come completato
     return this.http.patch(url, {}, { headers });

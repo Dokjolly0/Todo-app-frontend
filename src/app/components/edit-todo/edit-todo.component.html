@@ -1,28 +1,18 @@
 <div class="popup" (click)="closePopup()">
   <div class="popup-content" (click)="$event.stopPropagation()">
     <h1>Aggiungi Todo</h1>
-    <form #todoForm="ngForm" (ngSubmit)="onSubmit(todoForm)">
-      <!-- Titolo -->
+    <form (ngSubmit)="onSubmit()" #todoForm="ngForm">
       <div>
         <label for="title">Titolo:</label>
         <input
           id="title"
           name="title"
           [(ngModel)]="todo.title"
-          #title="ngModel"
-          required
-          minlength="3"
           placeholder="Inserisci il titolo"
         />
-        <div
-          *ngIf="title.invalid && (title.dirty || title.touched)"
-          class="error"
-        >
-          Title is required and must be at least 3 characters long.
-        </div>
       </div>
 
-      <!-- <div>
+      <div>
         <label for="description">Descrizione:</label>
         <textarea
           id="description"
@@ -31,40 +21,29 @@
           placeholder="Ancora da implementare"
           disabled
         ></textarea>
-      </div> -->
+      </div>
 
-      <!-- Data di scadenza -->
       <div>
         <label for="dueDate">Data di Scadenza:</label>
         <input
           id="dueDate"
           name="dueDate"
           [(ngModel)]="todo.dueDate"
-          #dueDate="ngModel"
           type="date"
-          [min]="minDate"
         />
-        <div
-          *ngIf="dueDate.invalid && (dueDate.dirty || dueDate.touched)"
-          class="error"
-        >
-          Please select a valid date (cannot be in the past).
-        </div>
       </div>
 
       <div>
-        <label for="assignedTo">Assegna a:</label>
-        <select id="assignedTo" name="assignedTo" [(ngModel)]="assignedToId">
+        <label for="assignee">Assegna a:</label>
+        <select id="assignee" name="assignee" [(ngModel)]="todo.assignee">
           <option value="" selected>Seleziona una persona</option>
-          <option *ngFor="let user of users" [value]="user.id">
-            {{ user.fullName }}
+          <option *ngFor="let person of persons" [value]="person">
+            {{ person }}
           </option>
         </select>
       </div>
 
-      <button id="submit" type="submit" [disabled]="todoForm.invalid">
-        Aggiungi
-      </button>
+      <button type="submit">Aggiungi</button>
       <button type="button" (click)="closePopup()">Annulla</button>
     </form>
   </div>

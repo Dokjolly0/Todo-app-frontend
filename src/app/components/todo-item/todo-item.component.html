@@ -4,23 +4,34 @@
   </div>
   <div class="info">
     <p><strong>Due Date:</strong> {{ todo.dueDate }}</p>
-    <p>
-      <strong>Created By:</strong>
-      <img
-        [src]="todo.createdBy.picture"
-        alt="{{ todo.createdBy.fullName }}"
-        class="avatar"
+    <p class="completed">
+      <strong>Completed: </strong>
+      <input
+        type="checkbox"
+        [checked]="todo.completed"
+        class="completed-checkbox"
+        id="completed"
+        (change)="onToggleComplete()"
       />
-      {{ todo.createdBy.fullName }}
+      <br />
     </p>
     <p>
-      <strong>Assigned To:</strong>
-      <img
-        [src]="todo.assignedTo?.picture"
-        alt="{{ todo.assignedTo?.fullName }}"
-        class="avatar"
-      />
-      {{ todo.assignedTo?.fullName }}
+      <strong>Created By:</strong>
+      <!-- Aggiungi uno spazio qui -->
+      <app-user-avatar [user]="todo.createdBy!" [size]="30"></app-user-avatar>
+      <span class="assigned-name">{{ todo.createdBy!.fullName }}</span>
+    </p>
+    <p>
+      <strong>Assigned To: </strong>
+      <!-- Aggiungi uno spazio qui -->
+      <ng-container *ngIf="todo.assignedTo; else noAssignment">
+        <app-user-avatar [user]="todo.assignedTo" [size]="30"></app-user-avatar>
+        <span class="assigned-name">{{ todo.assignedTo.fullName }}</span>
+        <!-- Aggiungi una classe se serve -->
+      </ng-container>
+      <ng-template #noAssignment>
+        <span>todo non assegnato</span>
+      </ng-template>
     </p>
   </div>
   <div class="actions">

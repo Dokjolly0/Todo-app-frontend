@@ -3,9 +3,9 @@ import { User } from './user.entity';
 export interface Todo {
   id?: string;
   title: string;
-  dueDate?: Date;
-  completed?: Boolean;
+  dueDate?: Date | string;
+  completed: Boolean;
   expired?: Boolean;
-  createdBy: User;
+  createdBy?: User;
   assignedTo?: User;
 }

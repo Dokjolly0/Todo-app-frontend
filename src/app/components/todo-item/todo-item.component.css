@@ -11,6 +11,12 @@
   box-sizing: border-box;
 }
 
+.todo-item .info p {
+  margin: 10px 0;
+  display: flex; /* Usa Flexbox */
+  align-items: center; /* Allinea l'avatar e il nome al centro verticalmente */
+}
+
 .header {
   flex: 1;
   display: flex;
@@ -28,15 +34,17 @@
 }
 
 .info p {
-  margin: 4px 0;
+  margin: 10px 0;
 }
 
 .avatar {
+  position: relative;
+  left: 0; /* Rimuove lo spostamento a sinistra */
+  margin-right: 8px; /* Spazio tra avatar e nome */
   border-radius: 50%;
   width: 32px;
   height: 32px;
   vertical-align: middle;
-  margin-right: 8px;
 }
 
 .actions {
@@ -66,4 +74,47 @@
 
 .actions button:last-child {
   margin-left: 8px;
+}
+
+.completed-checkbox {
+  /* Stile base per la checkbox */
+  position: relative;
+  top: 4px;
+  accent-color: #007bff; /* Colore dell'accento per la checkbox */
+  width: 20px; /* Dimensione della checkbox */
+  height: 20px; /* Dimensione della checkbox */
+  cursor: default; /* Cambia il cursore per indicare che è disabilitata */
+  margin-left: 8px; /* Spazio a sinistra della checkbox */
+}
+
+.user-icon-container {
+  display: inline-flex; /* Mantieni inline il contenitore dell'avatar */
+  align-items: center; /* Allinea verticalmente l'avatar */
+}
+
+.user-avatar,
+.user-icon {
+  margin-right: 8px; /* Spazio tra l'avatar o le iniziali e il nome */
+}
+
+/* Aggiungi spazio tra l'avatar e il nome */
+.user-icon-container,
+.user-avatar,
+.user-icon {
+  margin-right: 8px; /* Spazio tra avatar e nome */
+}
+
+.assigned-name {
+  margin-left: 8px; /* Spazio tra avatar e nome */
+}
+
+/* Assicurati che la label "Assigned To:" e l'avatar siano correttamente distanziati */
+.todo-item .info p {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.todo-item .info strong {
+  margin-right: 5px; /* Spazio tra "Assigned To:" e avatar */
 }

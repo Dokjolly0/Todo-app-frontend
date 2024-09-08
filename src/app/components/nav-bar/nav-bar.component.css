@@ -114,3 +114,7 @@
   visibility: visible;
   transform: translateY(0);
 }
+
+.username {
+  cursor: pointer;
+}

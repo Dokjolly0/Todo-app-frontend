@@ -4,28 +4,19 @@
 
   <!-- Ricerca todo e add button -->
   <div class="todo-dashboard-container">
-    <app-nav-bar-todo-dashboard></app-nav-bar-todo-dashboard>
+    <app-nav-bar-todo-dashboard [todos]="todos"></app-nav-bar-todo-dashboard>
   </div>
 
   <!-- Sezione utente -->
   <div class="user-section">
-    <div class="username">{{ fullName }}</div>
+    <div (click)="toggleDropdown()" class="username">{{ fullName }}</div>
     <!-- User icon -->
     <div class="user-icon-container">
-      <img
-        [src]="user.picture"
-        alt="User Avatar"
-        class="user-avatar"
+      <app-user-avatar
         (click)="toggleDropdown()"
-        (error)="showDefaultAvatar()"
-        *ngIf="!useDefaultAvatar; else defaultIcon"
-      />
-      <ng-template #defaultIcon>
-        <div></div>
-        <div (click)="toggleDropdown()" class="user-icon">
-          {{ userInitials }}
-        </div>
-      </ng-template>
+        [user]="user"
+        [size]="35"
+      ></app-user-avatar>
     </div>
 
     <!-- Dropdown-->
@@ -34,12 +25,3 @@
     </div>
   </div>
 </nav>
-
-<!-- <div class="user-icon" (click)="toggleDropdown()">
-  <ng-container *ngIf="user.picture; else defaultIcon">
-    <img [src]="user.picture" alt="User Icon" />
-  </ng-container>
-  <ng-template #defaultIcon>
-    {{ userInitials }}
-  </ng-template>
-</div> -->

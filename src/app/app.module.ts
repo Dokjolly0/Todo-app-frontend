@@ -12,8 +12,10 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AddTodoComponent } from './components/add-todo/add-todo.component';
+import { EditTodoComponent } from './components/edit-todo/edit-todo.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
+import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { TodoItemComponent } from './components/todo-item/todo-item.component';
     AddTodoComponent,
     NotFoundComponent,
     TodoItemComponent,
+    EditTodoComponent,
+    UserAvatarComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   // providers: [

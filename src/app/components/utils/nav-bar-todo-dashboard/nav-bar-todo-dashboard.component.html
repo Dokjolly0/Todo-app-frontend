@@ -1,4 +1,10 @@
 <div class="todo-dashboard">
-  <input type="text" class="search-bar" placeholder="Cerca todo..." />
+  <input
+    type="text"
+    class="search-bar"
+    placeholder="Cerca todo..."
+    [(ngModel)]="inputSearch"
+    (ngModelChange)="onSearchChange($event)"
+  />
   <button class="add-todo-btn">Aggiungi todo</button>
 </div>

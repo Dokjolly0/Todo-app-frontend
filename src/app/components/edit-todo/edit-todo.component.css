@@ -65,13 +65,3 @@
   background-color: #d6d6d6;
   cursor: not-allowed;
 }
-
-.error {
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-#submit:disabled {
-  background: #065fbf;
-}

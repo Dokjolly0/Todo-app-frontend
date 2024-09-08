@@ -1,7 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../entity/user.entity';
+import { Todo } from '../../entity/todo.entity';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,6 +11,7 @@ import { User } from '../../entity/user.entity';
 })
 export class NavBarComponent {
   constructor(private authService: AuthService, private router: Router) {}
+  @Input() todos!: Todo[];
   fullName: string = '';
   userInitials: string = ''; //Variabile che controlla le iniziali di nome e cognome
   isDropdownOpen: boolean = false; //Variabile che permette di controllare se il menu è aperto o chiuso

@@ -1,15 +1,14 @@
-<app-nav-bar></app-nav-bar>
+<app-nav-bar [todos]="todos"></app-nav-bar>
 
 <!-- Popup -->
 <app-add-todo
-  *ngIf="showPopup"
+  *ngIf="addTodoPopup"
   (close)="closePopup()"
   (addTodo)="handleAddTodo($event)"
 ></app-add-todo>
 
 <main>
-  <app-todo-item></app-todo-item>
-  <app-todo-item></app-todo-item>
-  <app-todo-item></app-todo-item>
-  <app-todo-item></app-todo-item>
+  <div *ngFor="let todo of todos">
+    <app-todo-item [todo]="todo"></app-todo-item>
+  </div>
 </main>
