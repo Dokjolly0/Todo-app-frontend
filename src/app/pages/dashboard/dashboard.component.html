@@ -1,5 +1,8 @@
-<app-nav-bar [todos]="todos" (searchChange)="handleSearchChange($event)">
-</app-nav-bar>
+<app-nav-bar
+  [todos]="todos"
+  (searchChange)="handleSearchChange($event)"
+  (incompleteFilterChange)="handleIncompleteFilterChange($event)"
+></app-nav-bar>
 
 <!-- Popup -->
 <app-add-todo

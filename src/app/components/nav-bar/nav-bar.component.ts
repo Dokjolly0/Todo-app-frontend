@@ -23,6 +23,7 @@ export class NavBarComponent {
   isDropdownOpen: boolean = false; //Variabile che permette di controllare se il menu è aperto o chiuso
   useDefaultAvatar: boolean = false;
   @Output() searchChange = new EventEmitter<string>();
+  @Output() incompleteFilterChange = new EventEmitter<boolean>();
   user: User = {
     firstName: '',
     lastName: '',
@@ -68,5 +69,9 @@ export class NavBarComponent {
 
   forwardSearchChange(searchTerm: string) {
     this.searchChange.emit(searchTerm); // Passa il valore di ricerca al componente padre
+  }
+
+  forwardIncompleteFilterChange(showIncompleteOnly: boolean) {
+    this.incompleteFilterChange.emit(showIncompleteOnly);
   }
 }

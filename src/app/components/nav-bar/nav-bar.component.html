@@ -7,8 +7,8 @@
     <app-nav-bar-todo-dashboard
       [todos]="todos"
       (searchChange)="forwardSearchChange($event)"
-    >
-    </app-nav-bar-todo-dashboard>
+      (incompleteFilterChange)="forwardIncompleteFilterChange($event)"
+    ></app-nav-bar-todo-dashboard>
   </div>
 
   <!-- Sezione utente -->

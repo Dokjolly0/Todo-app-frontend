@@ -16,33 +16,28 @@ export class DashboardComponent {
   addTodoPopup = false;
   todos: Todo[] = [];
   token = this.authService.getToken();
+  showUncompletedOnly = false; // La checkbox è di default falsa (mostra tutti)
 
   ngOnInit(): void {
-    this.getTodo().then((todos) => {
-      //console.log('Todos caricati:', todos);
+    // Alla prima visualizzazione, carica tutti i todo (completati e non)
+    this.getTodo(false).then((todos) => {
       this.todos = todos;
     });
   }
 
-  ngOnChanges(): void {
-    this.getTodo();
+  // Recupera i todo basati sul valore della checkbox
+  getTodo(showUncompletedOnly: boolean) {
+    // Se showUncompletedOnly è true, vogliamo solo gli incompleti
+    // Altrimenti, vogliamo tutti i todo
+    return this.todoService
+      .getTodo(this.token!, !showUncompletedOnly)
+      .toPromise();
   }
 
-  ngAfterViewInit() {
-    // Usa `ngAfterViewInit` per assicurarti che il DOM sia completamente carico
-    document.querySelector('.add-todo-btn')?.addEventListener('click', () => {
-      this.openPopup();
-    });
-  }
-
-  getTodo() {
-    return this.todoService.getTodo(this.token!, true).toPromise();
-  }
-
+  // Gestisce la ricerca
   handleSearchChange(searchTerm: string) {
     if (searchTerm.trim() === '') {
-      this.getTodo().then((todos) => {
-        //console.log('Todos caricati:', todos);
+      this.getTodo(this.showUncompletedOnly).then((todos) => {
         this.todos = todos;
       });
       return;
@@ -57,6 +52,21 @@ export class DashboardComponent {
     );
   }
 
+  // Gestisce il cambiamento della checkbox
+  handleIncompleteFilterChange(showIncompleteOnly: boolean) {
+    this.showUncompletedOnly = showIncompleteOnly;
+    // Carica i todo basati sul valore della checkbox
+    this.getTodo(this.showUncompletedOnly).then((todos) => {
+      console.log(
+        'Todos caricati:',
+        todos,
+        'showIncompleteOnly:',
+        showIncompleteOnly
+      );
+      this.todos = todos;
+    });
+  }
+
   openPopup() {
     this.addTodoPopup = true;
   }
@@ -67,7 +77,6 @@ export class DashboardComponent {
 
   handleAddTodo(todo: any) {
     this.todos.push(todo);
-    //console.log('Todo aggiunto:', todo);
   }
 }
 
