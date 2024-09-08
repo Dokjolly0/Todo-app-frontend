@@ -41,7 +41,6 @@ export class TodoItemComponent {
     this.todoService.checkTodo(this.token!, this.todo.id!, completed).subscribe(
       (response) => {
         this.todo.completed = completed; // Aggiorna localmente lo stato
-        console.log(`Todo fleggato ${completed}:`, response);
       },
       (error) => {
         console.error('Errore durante il completamento del todo:', error);
