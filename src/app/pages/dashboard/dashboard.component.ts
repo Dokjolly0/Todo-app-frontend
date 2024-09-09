@@ -93,11 +93,9 @@ export class DashboardComponent {
 
   // Metodo per gestire il salvataggio delle modifiche
   handleEditTodoSave(todo: Todo) {
-    // Trova e aggiorna il todo nella lista
-    const index = this.todos.findIndex((t) => t.id === todo.id);
-    if (index > -1) {
-      this.todos[index] = todo;
-    }
+    this.getTodo(!this.showUncompletedOnly).then((todos) => {
+      this.todos = todos;
+    });
     this.closeEditPopup(); // Chiude il popup di modifica
   }
 }

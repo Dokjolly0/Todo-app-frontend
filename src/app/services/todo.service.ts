@@ -100,7 +100,18 @@ export class TodoService {
     return this.http.get(url, { headers });
   }
 
-  updateTodo(token: string, id: string, completed: boolean) {}
+  //Modifica il service per il todo
+  updateTodo(token: string, todo: Todo) {
+    const url = 'http://localhost:3000/api/todos/update';
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const body = {
+      ...todo,
+      createdBy: todo.createdBy!.id, // Solo l'ID
+      assignedTo: todo.assignedTo ? todo.assignedTo.id : undefined, // Solo l'ID
+    };
+
+    return this.http.patch(url, body, { headers });
+  }
 
   assignTodo(id: string, assignedTo: string, token: string) {
     // Costruisci l'URL con il parametro id
