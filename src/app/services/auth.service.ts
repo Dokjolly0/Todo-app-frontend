@@ -56,7 +56,6 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    // Verifica se il token è presente nel localStorage
     return !!localStorage.getItem('token');
   }
 
@@ -66,12 +65,10 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    // Ottieni il token dal localStorage
     return localStorage.getItem('token');
   }
 
   isAuthenticated(): boolean {
-    // Verifica se l'utente è autenticato controllando la presenza del token
     return !!this.token;
   }
 

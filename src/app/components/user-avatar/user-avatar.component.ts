@@ -13,19 +13,14 @@ export class UserAvatarComponent implements OnInit {
     fullName: '',
     picture: '',
   };
-  @Input() size: number = 32; // Dimensione dell'avatar (default 32px)
-
-  userInitials: string = ''; // Variabile che controlla le iniziali
+  @Input() size: number = 32;
+  // Variables
+  userInitials: string = ''; // Iniziali nome e cognome
   useDefaultAvatar: boolean = false; // Controlla se mostrare le iniziali invece dell'immagine
 
   ngOnInit() {
-    if (!this.user.picture) {
-      this.useDefaultAvatar = true;
-    }
-    this.userInitials = this.getInitials(
-      this.user.firstName,
-      this.user.lastName
-    );
+    if (!this.user.picture) this.useDefaultAvatar = true;
+    this.userInitials = this.getInitials(this.user.firstName, this.user.lastName);
   }
 
   getInitials(firstName: string, lastName: string): string {

@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  HostListener,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../entity/user.entity';
@@ -34,10 +28,7 @@ export class NavBarComponent {
   ngOnInit() {
     this.user = this.authService.getUser();
     if (!this.user.picture) this.useDefaultAvatar = true;
-    this.userInitials = this.getInitials(
-      this.user.firstName,
-      this.user.lastName
-    );
+    this.userInitials = this.getInitials(this.user.firstName, this.user.lastName);
   }
 
   getInitials(firstName: string, lastName: string): string {
@@ -67,10 +58,10 @@ export class NavBarComponent {
     }
   }
 
+  // nav bar todo dashboard component
   forwardSearchChange(searchTerm: string) {
     this.searchChange.emit(searchTerm); // Passa il valore di ricerca al componente padre
   }
-
   forwardIncompleteFilterChange(showIncompleteOnly: boolean) {
     this.incompleteFilterChange.emit(showIncompleteOnly);
   }

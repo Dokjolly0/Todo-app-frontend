@@ -9,7 +9,7 @@ import {
 import { User } from '../../entity/user.entity';
 import { Todo } from '../../entity/todo.entity';
 import { TodoService } from '../../services/todo.service';
-import { UserService } from '../../services/user.service';
+import { fixDate } from '../../utils/functions/fixDate';
 
 @Component({
   selector: 'app-todo-item',
@@ -17,13 +17,14 @@ import { UserService } from '../../services/user.service';
   styleUrl: './todo-item.component.css',
 })
 export class TodoItemComponent {
-  constructor(private todoService: TodoService, private userService: UserService) {}
+  constructor(private todoService: TodoService) {}
   @Input() todo!: Todo;
   @Output() delete = new EventEmitter<string>();
   @Output() toggleComplete = new EventEmitter<string>();
   @Output() deleteSuccess: EventEmitter<void> = new EventEmitter();
   @Output() edit = new EventEmitter<Todo>(); // Cambia il tipo da string a Todo
   @ViewChild('todoItem') todoItem!: ElementRef; // Riferimento all'elemento DOM
+  // Variables
   token = localStorage.getItem('token');
   userObj = localStorage.getItem('user');
   user: User = JSON.parse(this.userObj!);
@@ -31,28 +32,12 @@ export class TodoItemComponent {
   useDefaultAvatar: boolean = false;
 
   ngOnInit(): void {
-    if (this.todo.dueDate) {
-      this.todo.dueDate = this.fixDate(this.todo.dueDate);
-    }
-    this.todo.creationDate = this.fixDate(this.todo.creationDate!, true);
+    if (this.todo.dueDate) this.todo.dueDate = fixDate(this.todo.dueDate);
+    this.todo.creationDate = fixDate(this.todo.creationDate!, true);
   }
 
   ngAfterViewInit() {
     this.fixHeigth();
-  }
-
-  fixDate(todoDate: Date | string, clock: boolean = false): string {
-    const date = new Date(todoDate);
-    const day = String(date.getDate()).padStart(2, '0'); // Usa getDate per il tempo locale
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Usa getMonth per il tempo locale
-    const year = date.getFullYear(); // Usa getFullYear per il tempo locale
-    if (clock) {
-      const hours = String(date.getHours()).padStart(2, '0');
-      const minutes = String(date.getMinutes()).padStart(2, '0');
-      return `${day}/${month}/${year} - ${hours}:${minutes}`;
-    }
-    //console.log(`${day}/${month}/${year} -> ${todoDate}`);
-    return `${day}/${month}/${year}`;
   }
 
   fixHeigth() {
@@ -64,12 +49,10 @@ export class TodoItemComponent {
   }
 
   onToggleComplete() {
-    // Inverti lo stato attuale del todo
     const completed = !this.todo.completed;
-
     this.todoService.checkTodo(this.token!, this.todo.id!, completed).subscribe(
       (response) => {
-        this.todo.completed = completed; // Aggiorna localmente lo stato
+        this.todo.completed = completed;
       },
       (error) => {
         console.error('Errore durante il completamento del todo:', error);

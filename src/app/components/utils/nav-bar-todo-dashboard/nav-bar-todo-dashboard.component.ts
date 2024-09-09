@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Todo } from '../../../entity/todo.entity';
 import { TodoService } from '../../../services/todo.service';
 
@@ -21,10 +15,6 @@ export class NavBarTodoDashboardComponent {
   showIncompleteOnly: boolean = true; // Checkbox di default true (mostra solo incompleti)
 
   onSearchChange() {
-    // if (this.showIncompleteOnly) {
-    //   this.showIncompleteOnly = false;
-    //   this.incompleteFilterChange.emit(this.showIncompleteOnly); // Emetti il nuovo stato della checkbox
-    // }
     this.searchChange.emit(this.inputSearch); // Emmetti il valore della ricerca come stringa
   }
 
