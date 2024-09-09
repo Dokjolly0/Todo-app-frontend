@@ -4,6 +4,7 @@ import { TodoService } from '../../services/todo.service';
 import { User } from '../../entity/user.entity';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { switchMap } from 'rxjs/operators';
 import { fixDate } from '../../utils/functions/fixDate';
 
 @Component({
@@ -28,8 +29,25 @@ export class EditTodoComponent {
   }
 
   onSubmit(form: NgForm) {
-    if (this.assignedToId !== '') this.todo.assignedTo!.id = this.assignedToId;
-    this.todoService.updateTodo(this.token!, this.todo).subscribe(
+    // Variabile per tenere traccia dell'observable che eseguirà l'operazione di aggiornamento del todo
+    let todoUpdate$;
+    if (this.todo.assignedTo !== undefined && this.assignedToId !== '') {
+      this.todo.assignedTo!.id! = this.assignedToId;
+      // Crea un observable per l'aggiornamento del todo
+      todoUpdate$ = this.todoService.updateTodo(this.token!, this.todo);
+    } else {
+      // Crea un observable per il recupero dell'utente assegnato al todo
+      todoUpdate$ = this.userService.getUserById(this.token!, this.assignedToId).pipe(
+        // Quando la chiamata a getUserById è completata, utilizza switchMap per passare al prossimo observable
+        switchMap((user: User) => {
+          this.todo.assignedTo = user;
+          return this.todoService.updateTodo(this.token!, this.todo);
+        })
+      );
+    }
+
+    // Gestisce il risultato finale dell'observable
+    todoUpdate$.subscribe(
       (updatedTodo) => {
         this.todo.dueDate;
         this.save.emit();
