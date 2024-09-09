@@ -1,45 +1,24 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Todo } from '../../entity/todo.entity';
+import { TodoService } from '../../services/todo.service';
 
 @Component({
   selector: 'app-edit-todo',
   templateUrl: './edit-todo.component.html',
-  styleUrl: './edit-todo.component.css',
+  styleUrls: ['./edit-todo.component.css'],
 })
 export class EditTodoComponent {
-  persons: any[] = ['Ciao', 'Prova'];
-
+  @Input() todo!: Todo;
   @Output() close = new EventEmitter<void>();
-  @Output() addTodo = new EventEmitter<any>();
+  @Output() save = new EventEmitter<Todo>();
 
-  ngOnInit(): void {
-    this.fixWidth();
-  }
+  constructor(private todoService: TodoService) {}
 
-  todo = {
-    title: '',
-    description: '',
-    dueDate: '',
-    assignee: '',
-  };
-
-  fixWidth() {
-    const inputElement = document.getElementById('dueDate') as HTMLInputElement;
-    const submitButton = document.getElementById(
-      'assignee'
-    ) as HTMLInputElement;
-
-    const width = inputElement.offsetWidth;
-    submitButton.style.width = `${width}px`;
+  onSubmit() {
+    console.log(this.todo);
   }
 
   closePopup() {
-    this.close.emit();
-  }
-
-  onSubmit() {
-    if (this.todo.title) {
-      this.addTodo.emit(this.todo);
-      this.closePopup();
-    }
+    this.close.emit(); // Notifica il componente padre
   }
 }

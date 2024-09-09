@@ -4,15 +4,27 @@
   (incompleteFilterChange)="handleIncompleteFilterChange()"
 ></app-nav-bar>
 
-<!-- Popup -->
+<!-- Popup add todo-->
 <app-add-todo
   *ngIf="addTodoPopup"
   (close)="closePopup()"
   (addTodo)="handleAddTodo($event)"
 ></app-add-todo>
 
+<!-- Popup Edit Todo -->
+<app-edit-todo
+  *ngIf="editTodoPopup"
+  [todo]="selectedTodo"
+  (close)="closeEditPopup()"
+  (save)="handleEditTodoSave($event)"
+></app-edit-todo>
+
 <main>
   <div *ngFor="let todo of todos">
-    <app-todo-item [todo]="todo"></app-todo-item>
+    <app-todo-item
+      (edit)="onEditTodo($event)"
+      (deleteSuccess)="handleDeleteSuccess()"
+      [todo]="todo"
+    ></app-todo-item>
   </div>
 </main>

@@ -17,14 +17,12 @@ import { UserService } from '../../services/user.service';
   styleUrl: './todo-item.component.css',
 })
 export class TodoItemComponent {
-  constructor(
-    private todoService: TodoService,
-    private userService: UserService
-  ) {}
+  constructor(private todoService: TodoService, private userService: UserService) {}
   @Input() todo!: Todo;
   @Output() delete = new EventEmitter<string>();
   @Output() toggleComplete = new EventEmitter<string>();
-  @Output() edit = new EventEmitter<string>();
+  @Output() deleteSuccess: EventEmitter<void> = new EventEmitter();
+  @Output() edit = new EventEmitter<Todo>(); // Cambia il tipo da string a Todo
   @ViewChild('todoItem') todoItem!: ElementRef; // Riferimento all'elemento DOM
   token = localStorage.getItem('token');
   userObj = localStorage.getItem('user');
@@ -91,7 +89,7 @@ export class TodoItemComponent {
   onDelete() {
     this.todoService.delate(this.todo.id!, this.token!).subscribe(
       (response) => {
-        window.location.reload(); // Ricarica la pagina
+        this.deleteSuccess.emit(); // Emmette un evento quando l'eliminazione è riuscita
       },
       (error) => {
         console.error("Errore durante l'eliminazione del todo:", error);
@@ -100,6 +98,6 @@ export class TodoItemComponent {
   }
 
   onEdit() {
-    this.edit.emit(this.todo.id);
+    this.edit.emit(this.todo);
   }
 }

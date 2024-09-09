@@ -12,11 +12,11 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AddTodoComponent } from './components/add-todo/add-todo.component';
-import { EditTodoComponent } from './components/edit-todo/edit-todo.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 import { provideAnimationsAsync as provideAnimationsAsync_alias } from '@angular/platform-browser/animations/async';
+import { EditTodoComponent } from './components/edit-todo/edit-todo.component';
 
 @NgModule({
   declarations: [
@@ -29,8 +29,8 @@ import { provideAnimationsAsync as provideAnimationsAsync_alias } from '@angular
     AddTodoComponent,
     NotFoundComponent,
     TodoItemComponent,
-    EditTodoComponent,
     UserAvatarComponent,
+    EditTodoComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   // providers: [
