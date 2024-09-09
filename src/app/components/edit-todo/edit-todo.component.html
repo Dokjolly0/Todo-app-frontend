@@ -1,16 +1,41 @@
-<div class="edit-todo-popup">
-  <div class="edit-todo-overlay" (click)="closePopup()"></div>
-  <div class="edit-todo-content">
-    <h2>Edit Todo</h2>
-    <form (ngSubmit)="onSubmit()" #editForm="ngForm">
+<div class="popup" (click)="closePopup()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <h1>Modifica Todo</h1>
+    <form #editForm="ngForm" (ngSubmit)="onSubmit(editForm)">
+      <!-- Titolo -->
       <div>
         <label for="title">Title:</label>
-        <input id="title" name="title" [(ngModel)]="todo.title" required />
+        <input
+          id="title"
+          name="title"
+          [(ngModel)]="todo.title"
+          #title="ngModel"
+          required
+          minlength="3"
+          placeholder="Enter title"
+        />
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="error">
+          Title is required and must be at least 3 characters long.
+        </div>
       </div>
+
+      <!-- Data di scadenza -->
       <div>
         <label for="dueDate">Due Date:</label>
-        <input id="dueDate" name="dueDate" type="date" [(ngModel)]="todo.dueDate" />
+        <input
+          id="dueDate"
+          name="dueDate"
+          [(ngModel)]="todo.dueDate"
+          #dueDate="ngModel"
+          type="date"
+          [min]="minDate"
+        />
+        <div *ngIf="dueDate.invalid && (dueDate.dirty || dueDate.touched)" class="error">
+          Please select a valid date (cannot be in the past).
+        </div>
       </div>
+
+      <!-- Completed -->
       <div>
         <label for="completed">Completed:</label>
         <input
@@ -20,7 +45,19 @@
           [(ngModel)]="todo.completed"
         />
       </div>
-      <button type="submit">Save</button>
+
+      <!-- Assegna a -->
+      <div>
+        <label for="assignedTo">Assigned To:</label>
+        <select id="assignedTo" name="assignedTo" [(ngModel)]="assignedToId">
+          <option value="" selected>Select a person</option>
+          <option *ngFor="let user of users" [value]="user.id">
+            {{ user.fullName }}
+          </option>
+        </select>
+      </div>
+
+      <button id="submit" type="submit" [disabled]="editForm.invalid">Save</button>
       <button type="button" (click)="closePopup()">Cancel</button>
     </form>
   </div>
