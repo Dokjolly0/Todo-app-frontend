@@ -16,6 +16,7 @@ import { EditTodoComponent } from './components/edit-todo/edit-todo.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
+import { provideAnimationsAsync as provideAnimationsAsync_alias } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { UserAvatarComponent } from './components/user-avatar/user-avatar.compon
   //   },
   //   provideAnimationsAsync(),
   // ],
-  providers: [],
+  providers: [provideAnimationsAsync_alias()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

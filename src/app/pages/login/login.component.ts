@@ -22,8 +22,6 @@ export class LoginComponent {
       () => {
         const user = this.authService.getUser();
         const token = this.authService.getToken();
-        console.log('User:', user);
-        console.log('Token:', token);
         this.router.navigate(['/app/dashboard']);
       },
       (err: any) => {

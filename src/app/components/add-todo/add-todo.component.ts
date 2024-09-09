@@ -21,7 +21,10 @@ export class AddTodoComponent {
   user = localStorage.getItem('user');
   users: User[] = [];
   assignedToId: string = '';
-  minDate: string = new Date().toISOString().split('T')[0]; // Data minima per il campo della data
+  // Variabili per la data minima -> a partire dal giorno successivo
+  minDate: string = new Date(new Date().setDate(new Date().getDate() + 1))
+    .toISOString()
+    .split('T')[0];
 
   ngOnInit(): void {
     this.fixWidth();
