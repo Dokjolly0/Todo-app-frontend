@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser'; // Importa il servizio Title
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'Frontand';
+  constructor(private titleSrv: Title) {}
+  title = 'Todo app';
+
+  ngOnInit(): void {
+    this.titleSrv.setTitle(this.title);
+  }
 }

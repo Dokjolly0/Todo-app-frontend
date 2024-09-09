@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { isValidUrl } from '../../utils/functions/validateUrl';
 import { isValidEmail } from '../../utils/functions/validationEmail';
+import { Title } from '@angular/platform-browser'; // Title service
 
 @Component({
   selector: 'app-register',
@@ -11,8 +12,13 @@ import { isValidEmail } from '../../utils/functions/validationEmail';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private titleSrv: Title
+  ) {}
   //Property
+  pageTitle = 'Register todo app';
   firstName: string = '';
   lastName: string = '';
   picture: string = '';
@@ -27,13 +33,13 @@ export class RegisterComponent {
   //OnInit
   ngOnInit(): void {
     this.fixWidth();
+    this.titleSrv.setTitle(this.pageTitle);
   }
 
   //Method
   register(form: NgForm) {
     this.validUrlPicture = isValidUrl(this.picture);
     this.validEmailUsername = isValidEmail(this.username);
-    console.log(this.validEmailUsername);
     if (
       form.valid &&
       this.password.length >= 8 &&
@@ -54,26 +60,16 @@ export class RegisterComponent {
           },
           (error: any) => {
             console.log(error);
-            console.log(
-              this.firstName,
-              this.lastName,
-              this.picture,
-              this.username,
-              this.password
-            );
             alert('Errore durante la registrazione' + error.message);
           }
         );
     } else {
-      console.log('Not valid');
       return;
     }
   }
 
   fixWidth() {
-    const inputElement = document.getElementById(
-      'password'
-    ) as HTMLInputElement;
+    const inputElement = document.getElementById('password') as HTMLInputElement;
     const submitButton = document.getElementById('submit') as HTMLInputElement;
 
     const width = inputElement.offsetWidth;
@@ -83,11 +79,9 @@ export class RegisterComponent {
   getErrorMessages(): string {
     const messages = [];
 
-    if (this.checkPassword === '')
-      messages.push('Please confirm your password');
+    if (this.checkPassword === '') messages.push('Please confirm your password');
 
-    if (this.checkPassword !== this.password)
-      messages.push('Passwords do not match');
+    if (this.checkPassword !== this.password) messages.push('Passwords do not match');
 
     if (this.checkPassword.length < 8)
       messages.push('Password lenght must be at least 8 character');
@@ -97,9 +91,7 @@ export class RegisterComponent {
 
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
-    const passwordInput = document.getElementById(
-      'password'
-    ) as HTMLInputElement;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
 
     if (this.passwordVisible) passwordInput.type = 'text';
     else passwordInput.type = 'password';
@@ -107,9 +99,7 @@ export class RegisterComponent {
 
   toggleCheckPasswordVisibility() {
     this.passwordCheckVisible = !this.passwordCheckVisible;
-    const passwordInput = document.getElementById(
-      'check-password'
-    ) as HTMLInputElement;
+    const passwordInput = document.getElementById('check-password') as HTMLInputElement;
 
     if (this.passwordCheckVisible) passwordInput.type = 'text';
     else passwordInput.type = 'password';
