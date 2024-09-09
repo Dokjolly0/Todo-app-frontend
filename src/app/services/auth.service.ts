@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { RegisterData } from '../entity/register.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,6 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   private token: string | null = null;
   private user: any | null = null;
-
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
@@ -17,30 +17,42 @@ export class AuthService {
       .post<any>('http://localhost:3000/api/login', { username, password })
       .pipe(
         tap((response: any) => {
-          // Salva il token e le informazioni dell'utente nel localStorage
           localStorage.setItem('token', response.token);
           localStorage.setItem('user', JSON.stringify(response.user));
-          // Aggiorna le proprietà private
           this.token = response.token;
           this.user = response.user;
         })
       );
   }
 
+  // 5 Proprieta separate
   register(
     firstName: string,
     lastName: string,
     picture: string,
     username: string,
     password: string
+  ): Observable<any>;
+  // 1 oggetto singolo
+  register(data: RegisterData): Observable<any>;
+  // Implement
+  register(
+    firstNameOrObj: string | RegisterData,
+    lastName?: string,
+    picture?: string,
+    username?: string,
+    password?: string
   ): Observable<any> {
-    return this.http.post<any>('http://localhost:3000/api/register', {
-      firstName,
-      lastName,
-      username,
-      password,
-      picture,
-    });
+    if (typeof firstNameOrObj === 'string') {
+      return this.http.post<any>('http://localhost:3000/api/register', {
+        firstName: firstNameOrObj,
+        lastName,
+        picture,
+        username,
+        password,
+      });
+    }
+    return this.http.post<any>('http://localhost:3000/api/register', firstNameOrObj);
   }
 
   isLoggedIn(): boolean {
@@ -64,7 +76,6 @@ export class AuthService {
   }
 
   logout(): void {
-    // Rimuovi il token e le informazioni dell'utente dal localStorage e reimposta le proprietà a null
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.token = null;

@@ -5,28 +5,34 @@
     </div>
     <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
       <div class="input-box">
-        <div *ngIf="registerForm.submitted && !firstName" class="error-message">
+        <div
+          *ngIf="registerForm.submitted && !registerData.firstName"
+          class="error-message"
+        >
           Name is required
         </div>
         <input
           type="text"
           class="input-field"
           placeholder="Name"
-          [(ngModel)]="firstName"
+          [(ngModel)]="registerData.firstName"
           name="firstName"
           autocomplete="off"
           required
         />
       </div>
       <div class="input-box">
-        <div *ngIf="registerForm.submitted && !lastName" class="error-message">
+        <div
+          *ngIf="registerForm.submitted && !registerData.lastName"
+          class="error-message"
+        >
           Surname is required
         </div>
         <input
           type="text"
           class="input-field"
           placeholder="Surname"
-          [(ngModel)]="lastName"
+          [(ngModel)]="registerData.lastName"
           name="lastName"
           autocomplete="off"
           required
@@ -34,7 +40,7 @@
       </div>
       <div class="input-box">
         <div
-          *ngIf="(registerForm.submitted && !picture) || !validUrlPicture"
+          *ngIf="(registerForm.submitted && !registerData.picture) || !validUrlPicture"
           class="error-message"
         >
           Picture URL is required and must be a url (https://www.example.com)
@@ -43,7 +49,7 @@
           type="url"
           class="input-field"
           placeholder="Picture"
-          [(ngModel)]="picture"
+          [(ngModel)]="registerData.picture"
           name="picture"
           autocomplete="off"
           required
@@ -51,7 +57,9 @@
       </div>
       <div class="input-box">
         <div
-          *ngIf="(registerForm.submitted && !username) || !validEmailUsername"
+          *ngIf="
+            (registerForm.submitted && !registerData.username) || !validEmailUsername
+          "
           class="error-message"
         >
           Username is required and must be a email (tryal&#64;user.com)
@@ -60,7 +68,7 @@
           type="email"
           class="input-field"
           placeholder="Username"
-          [(ngModel)]="username"
+          [(ngModel)]="registerData.username"
           name="username"
           autocomplete="off"
           required
@@ -69,8 +77,8 @@
       <div class="input-box">
         <div
           *ngIf="
-            (registerForm.submitted && !password) ||
-            (registerForm.submitted && password.length < 8)
+            (registerForm.submitted && !registerData.password) ||
+            (registerForm.submitted && registerData.password.length < 8)
           "
           class="error-message"
         >
@@ -80,24 +88,22 @@
           type="password"
           class="input-field"
           placeholder="Password"
-          [(ngModel)]="password"
+          [(ngModel)]="registerData.password"
           name="password"
           autocomplete="off"
           required
           id="password"
         />
-        <i
-          class="material-icons toggle-password"
-          (click)="togglePasswordVisibility()"
-          >visibility</i
-        >
+        <i class="material-icons toggle-password" (click)="togglePasswordVisibility()">
+          visibility
+        </i>
       </div>
       <div class="input-box">
         <div
           *ngIf="
             (registerForm.submitted && !checkPassword) ||
             (registerForm.submitted && checkPassword.length < 8) ||
-            password !== checkPassword
+            registerData.password !== checkPassword
           "
           class="error-message"
         >
@@ -116,14 +122,18 @@
         <i
           class="material-icons toggle-password"
           (click)="toggleCheckPasswordVisibility()"
-          >visibility</i
         >
+          visibility
+        </i>
       </div>
       <div class="input-submit">
         <button type="submit" class="submit-btn" id="submit">Sign Up</button>
       </div>
       <div class="sign-up-link">
-        <p>Have an account? <a href="/signin">Login</a></p>
+        <p>
+          Have an account?
+          <a href="/signin">Login</a>
+        </p>
       </div>
     </form>
   </div>
