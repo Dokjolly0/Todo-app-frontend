@@ -25,23 +25,22 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     this.titleSrv.setTitle(this.pageTitle);
-    // Alla prima visualizzazione, carica tutti i todo (completati e non)
+    // Alla prima visualizzazione, carica solo i todo non completati
     this.getTodo(!this.showUncompletedOnly).then((todos) => {
       this.todos = todos;
     });
-
+    // Aggiunge un event listener al bottone per mostrare l'add component popup
     document.getElementById('add-todo-btn')?.addEventListener('click', () => {
       this.addTodoPopup = !this.addTodoPopup;
     });
   }
 
-  // Recupera i todo basati sul valore della checkbox
+  // Ritornerà una Promise contenente i todo (showUncompletedOnly true = solo i non completati, false = tutti)
   getTodo(showUncompletedOnly: boolean) {
-    // Se showUncompletedOnly è true, vogliamo solo gli incompleti // Altrimenti, vogliamo tutti i todo
     return this.todoService.getTodo(this.token!, showUncompletedOnly).toPromise();
   }
 
-  // Gestisce la ricerca
+  // Navbar component
   handleSearchChange(searchTerm: string) {
     if (searchTerm.trim() === '') {
       this.getTodo(!this.showUncompletedOnly).then((todos) => {
@@ -49,7 +48,6 @@ export class DashboardComponent {
       });
       return;
     }
-
     this.todoService.getTodoByTitle(this.token!, searchTerm).subscribe(
       (todos: Todo[]) => {
         this.todos = todos;
@@ -60,7 +58,7 @@ export class DashboardComponent {
     );
   }
 
-  // Gestisce il cambiamento della checkbox
+  // Navbar component
   handleIncompleteFilterChange() {
     this.showUncompletedOnly = !this.showUncompletedOnly; // Cambia il valore in base allo stato della checkbox
     // Carica i todo basati sul valore della checkbox
@@ -69,36 +67,32 @@ export class DashboardComponent {
     });
   }
 
+  // Todo item
   handleDeleteSuccess() {
     this.getTodo(!this.showUncompletedOnly).then((todos) => {
       this.todos = todos;
     });
   }
 
+  // Add component popup
   openPopup() {
     this.addTodoPopup = true;
   }
-
   closePopup() {
     this.addTodoPopup = false;
   }
-
   handleAddTodo(todo: any) {
     this.todos.push(todo);
   }
 
-  // Metodo per gestire l'evento di modifica
+  // Edit component popup
   onEditTodo(todo: Todo) {
     this.selectedTodo = todo; // Imposta il todo selezionato per la modifica
     this.editTodoPopup = true; // Mostra il popup di modifica
   }
-
-  // Metodo per chiudere il popup di modifica
   closeEditPopup() {
-    this.editTodoPopup = false;
+    this.editTodoPopup = false; // Chiude il popup di modifica
   }
-
-  // Metodo per gestire il salvataggio delle modifiche
   handleEditTodoSave(todo: Todo) {
     this.getTodo(!this.showUncompletedOnly).then((todos) => {
       this.todos = todos;
