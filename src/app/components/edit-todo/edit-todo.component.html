@@ -50,8 +50,14 @@
       <div>
         <label for="assignedTo">Assigned To:</label>
         <select id="assignedTo" name="assignedTo" [(ngModel)]="assignedToId">
-          <option value="" selected>Select a person</option>
-          <option *ngFor="let user of users" [value]="user.id">
+          <!-- Opzione di default con valore specifico -->
+          <option [ngValue]="'noSelection'" [selected]="true">Select a person</option>
+          <!-- Opzione per rimuovere l'assegnazione con valore specifico -->
+          <option [ngValue]="'removeAssign'" *ngIf="todo.assignedTo">
+            Remove assign
+          </option>
+          <!-- Lista utenti con ID come valore -->
+          <option *ngFor="let user of users" [ngValue]="user.id">
             {{ user.fullName }}
           </option>
         </select>

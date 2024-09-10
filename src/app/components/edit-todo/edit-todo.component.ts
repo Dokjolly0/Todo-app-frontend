@@ -22,27 +22,36 @@ export class EditTodoComponent {
   minDate: string = new Date().toISOString().split('T')[0]; // Imposta la data minima per il campo di scadenza
 
   //Variable
-  assignedToId: string = ''; // Aggiungi questa proprietà
+  assignedToId: string = 'noSelection'; // Aggiungi questa proprietà
 
   ngOnInit(): void {
     this.getUsers();
   }
 
   onSubmit(form: NgForm) {
-    console.log(this.todo);
+    const logicAssign = () => {
+      // noSelection -> assignedTo uguale a prima
+      if (this.assignedToId === 'noSelection') {
+        if (this.todo.assignedTo === undefined) this.todo.assignedTo = undefined;
+      }
+      // noSelection -> rimuovi assignedToUser se presente
+      else if (this.assignedToId === 'removeAssign') {
+        this.todo.assignedTo = undefined;
+      } else {
+        if (this.todo.assignedTo) this.todo.assignedTo!.id! = this.assignedToId;
+      }
+    };
+
     // Variabile per tenere traccia dell'observable che eseguirà l'operazione di aggiornamento del todo
     let todoUpdate$;
-    if (this.todo.assignedTo !== undefined && this.assignedToId !== '') {
-      this.todo.assignedTo!.id! = this.assignedToId;
+    if (this.todo.assignedTo !== undefined) {
+      logicAssign();
       // Crea un observable per l'aggiornamento del todo
       todoUpdate$ = this.todoService.updateTodo(this.token!, this.todo);
     } else if (
-      (this.todo.assignedTo !== undefined && this.assignedToId === '') ||
-      (this.todo.assignedTo === undefined && this.assignedToId === '')
+      this.todo.assignedTo === undefined &&
+      this.assignedToId !== 'noSelection'
     ) {
-      this.todo.assignedTo = undefined;
-      todoUpdate$ = this.todoService.updateTodo(this.token!, this.todo);
-    } else {
       // Crea un observable per il recupero dell'utente assegnato al todo
       todoUpdate$ = this.userService.getUserById(this.token!, this.assignedToId).pipe(
         // Quando la chiamata a getUserById è completata, utilizza switchMap per passare al prossimo observable
@@ -51,6 +60,8 @@ export class EditTodoComponent {
           return this.todoService.updateTodo(this.token!, this.todo);
         })
       );
+    } else {
+      todoUpdate$ = this.todoService.updateTodo(this.token!, this.todo);
     }
 
     // Gestisce il risultato finale dell'observable
