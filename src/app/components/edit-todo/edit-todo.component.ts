@@ -29,11 +29,15 @@ export class EditTodoComponent {
   }
 
   onSubmit(form: NgForm) {
+    console.log(this.todo);
     // Variabile per tenere traccia dell'observable che eseguirà l'operazione di aggiornamento del todo
     let todoUpdate$;
     if (this.todo.assignedTo !== undefined && this.assignedToId !== '') {
       this.todo.assignedTo!.id! = this.assignedToId;
       // Crea un observable per l'aggiornamento del todo
+      todoUpdate$ = this.todoService.updateTodo(this.token!, this.todo);
+    } else if (this.todo.assignedTo !== undefined && this.assignedToId === '') {
+      this.todo.assignedTo = undefined;
       todoUpdate$ = this.todoService.updateTodo(this.token!, this.todo);
     } else {
       // Crea un observable per il recupero dell'utente assegnato al todo
