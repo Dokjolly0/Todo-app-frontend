@@ -36,7 +36,10 @@ export class EditTodoComponent {
       this.todo.assignedTo!.id! = this.assignedToId;
       // Crea un observable per l'aggiornamento del todo
       todoUpdate$ = this.todoService.updateTodo(this.token!, this.todo);
-    } else if (this.todo.assignedTo !== undefined && this.assignedToId === '') {
+    } else if (
+      (this.todo.assignedTo !== undefined && this.assignedToId === '') ||
+      (this.todo.assignedTo === undefined && this.assignedToId === '')
+    ) {
       this.todo.assignedTo = undefined;
       todoUpdate$ = this.todoService.updateTodo(this.token!, this.todo);
     } else {
