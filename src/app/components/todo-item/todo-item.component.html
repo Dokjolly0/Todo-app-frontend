@@ -56,7 +56,7 @@
       <ng-container *ngIf="todo.assignedTo; else noAssignment">
         <app-user-avatar [user]="todo.assignedTo" [size]="30"></app-user-avatar>
         <span class="assigned-name">
-          {{ todo.assignedTo?.fullName }}
+          {{ todo.assignedTo.fullName }}
           <!-- Se è l'utente attivo aggiungi (me) -->
           <ng-container *ngIf="user.id === todo.assignedTo?.id">(me)</ng-container>
         </span>
