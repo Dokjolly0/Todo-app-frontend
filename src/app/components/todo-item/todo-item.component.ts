@@ -33,9 +33,6 @@ export class TodoItemComponent {
 
   ngOnInit(): void {
     if (this.todo.dueDate) this.todo.dueDate = fixDate(this.todo.dueDate);
-    // if (this.todo.assignedTo === undefined) {
-    //   this.todo.assignedTo = undefined;
-    // }
     this.todo.creationDate = fixDate(this.todo.creationDate!, true);
   }
 
