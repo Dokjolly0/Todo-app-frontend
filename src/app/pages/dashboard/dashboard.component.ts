@@ -10,11 +10,7 @@ import { Title } from '@angular/platform-browser'; //Title service
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
-  constructor(
-    private todoService: TodoService,
-    private authService: AuthService,
-    private titleSrv: Title
-  ) {}
+  constructor(private todoService: TodoService, private authService: AuthService, private titleSrv: Title) {}
   pageTitle = 'Dashboard';
   addTodoPopup = false;
   editTodoPopup = false;

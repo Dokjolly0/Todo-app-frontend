@@ -5,7 +5,7 @@ import { User } from '../../entity/user.entity';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { switchMap } from 'rxjs/operators';
-import { fixDate } from '../../utils/functions/fixDate';
+import { dateStringToIsoString } from '../../utils/functions/fixDate';
 
 @Component({
   selector: 'app-edit-todo',
@@ -29,17 +29,17 @@ export class EditTodoComponent {
   }
 
   onSubmit(form: NgForm) {
+    //true -> è per l'input html
+    if (this.todo.dueDate) this.todo.dueDate = dateStringToIsoString(this.todo.dueDate, true);
     const logicAssign = () => {
+      const condition1 = this.assignedToId === 'noSelection' && this.todo.assignedTo === undefined;
+      const condition2 = this.assignedToId === 'noSelection' && this.todo.assignedTo !== undefined;
+      const condition3 = this.assignedToId === 'removeAssign';
       // noSelection -> assignedTo uguale a prima
-      if (this.assignedToId === 'noSelection') {
-        if (this.todo.assignedTo === undefined) this.todo.assignedTo = undefined;
-      }
-      // noSelection -> rimuovi assignedToUser se presente
-      else if (this.assignedToId === 'removeAssign') {
-        this.todo.assignedTo = undefined;
-      } else {
-        if (this.todo.assignedTo) this.todo.assignedTo!.id! = this.assignedToId;
-      }
+      // removeAssign -> assignedTo uguale a undefined
+      if (condition1 || condition3) this.todo.assignedTo = undefined;
+      else if (condition2) this.todo.assignedTo!.id = this.todo.assignedTo!.id;
+      else this.todo.assignedTo!.id! = this.assignedToId;
     };
 
     // Variabile per tenere traccia dell'observable che eseguirà l'operazione di aggiornamento del todo
@@ -48,10 +48,7 @@ export class EditTodoComponent {
       logicAssign();
       // Crea un observable per l'aggiornamento del todo
       todoUpdate$ = this.todoService.updateTodo(this.token!, this.todo);
-    } else if (
-      this.todo.assignedTo === undefined &&
-      this.assignedToId !== 'noSelection'
-    ) {
+    } else if (this.todo.assignedTo === undefined && this.assignedToId !== 'noSelection') {
       // Crea un observable per il recupero dell'utente assegnato al todo
       todoUpdate$ = this.userService.getUserById(this.token!, this.assignedToId).pipe(
         // Quando la chiamata a getUserById è completata, utilizza switchMap per passare al prossimo observable
@@ -64,10 +61,11 @@ export class EditTodoComponent {
       todoUpdate$ = this.todoService.updateTodo(this.token!, this.todo);
     }
 
+    console.log(this.todo);
+
     // Gestisce il risultato finale dell'observable
     todoUpdate$.subscribe(
       (updatedTodo) => {
-        this.todo.dueDate;
         this.save.emit();
         this.closePopup();
       },

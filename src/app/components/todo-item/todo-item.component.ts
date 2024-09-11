@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ElementRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { User } from '../../entity/user.entity';
 import { Todo } from '../../entity/todo.entity';
 import { TodoService } from '../../services/todo.service';
