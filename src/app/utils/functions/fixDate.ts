@@ -17,12 +17,9 @@ export function dateStringToIsoString(fixedDate: Date | string, forInput: boolea
     const hasTime = fixedDate.includes(' - ');
     let datePart: string;
     let timePart: string | undefined;
-
     // Controlla se esiste la parte di orario
     [datePart, timePart] = fixedDate.split(' - ');
-
     let year: number, month: number, day: number;
-
     if (datePart.includes('/')) {
       // Formato europeo (dd/MM/yyyy)
       [day, month, year] = datePart.split('/').map(Number);
@@ -45,7 +42,6 @@ export function dateStringToIsoString(fixedDate: Date | string, forInput: boolea
       const timezoneOffset = date.getTimezoneOffset() * 60000; // Calcola il fuso orario
       isoDate = new Date(date.getTime() - timezoneOffset).toISOString().replace('Z', ' GMT+0200');
     }
-
     // Se `forInput` è true, restituisci solo la parte della data "yyyy-MM-dd"
     return forInput ? isoDate.split('T')[0] : isoDate;
   } else if (fixedDate instanceof Date) {

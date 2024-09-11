@@ -61,8 +61,6 @@ export class EditTodoComponent {
       todoUpdate$ = this.todoService.updateTodo(this.token!, this.todo);
     }
 
-    console.log(this.todo);
-
     // Gestisce il risultato finale dell'observable
     todoUpdate$.subscribe(
       (updatedTodo) => {
