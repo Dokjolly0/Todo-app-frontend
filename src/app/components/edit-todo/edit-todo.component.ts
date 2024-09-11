@@ -21,8 +21,6 @@ export class EditTodoComponent {
   @Output() save = new EventEmitter<Todo>();
   minDate: string = new Date().toISOString().split('T')[0]; // Imposta la data minima per il campo di scadenza
   isDueDateDisabled: boolean = false; // Inizialmente non disabilitato
-
-  //Variable
   assignedToId: string = 'noSelection'; // Aggiungi questa proprietà
 
   ngOnInit(): void {
@@ -34,7 +32,6 @@ export class EditTodoComponent {
     if (this.todo.dueDate) {
       if (this.isDueDateDisabled) this.todo.dueDate = undefined;
       else this.todo.dueDate = dateStringToIsoString(this.todo.dueDate, true);
-      console.log(this.todo.dueDate);
     }
     const logicAssign = () => {
       const condition1 = this.assignedToId === 'noSelection' && this.todo.assignedTo === undefined;

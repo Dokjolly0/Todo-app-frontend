@@ -31,7 +31,7 @@
           [min]="minDate"
           [disabled]="isDueDateDisabled"
         />
-        <label *ngIf="todo.dueDate" for="disableDueDate">Remove duedate</label>
+        <label *ngIf="todo.dueDate" for="disableDueDate">Remove duedate:</label>
         <input *ngIf="todo.dueDate" [(ngModel)]="isDueDateDisabled" type="checkbox" name="disableDueDate" />
         <div *ngIf="dueDate.invalid && (dueDate.dirty || dueDate.touched)" class="error">
           Please select a valid date (cannot be in the past).
