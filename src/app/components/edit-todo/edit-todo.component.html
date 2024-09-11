@@ -23,13 +23,16 @@
       <div>
         <label for="dueDate">Due Date:</label>
         <input
-          id="dueDate"
+          id="todo.dueDate"
           name="dueDate"
           [(ngModel)]="todo.dueDate"
           #dueDate="ngModel"
           type="date"
           [min]="minDate"
+          [disabled]="isDueDateDisabled"
         />
+        <label *ngIf="todo.dueDate" for="disableDueDate">Remove duedate</label>
+        <input *ngIf="todo.dueDate" [(ngModel)]="isDueDateDisabled" type="checkbox" name="disableDueDate" />
         <div *ngIf="dueDate.invalid && (dueDate.dirty || dueDate.touched)" class="error">
           Please select a valid date (cannot be in the past).
         </div>
@@ -38,12 +41,7 @@
       <!-- Completed -->
       <div>
         <label for="completed">Completed:</label>
-        <input
-          id="completed"
-          name="completed"
-          type="checkbox"
-          [(ngModel)]="todo.completed"
-        />
+        <input id="completed" name="completed" type="checkbox" [(ngModel)]="todo.completed" />
       </div>
 
       <!-- Assegna a -->
@@ -53,9 +51,7 @@
           <!-- Opzione di default con valore specifico -->
           <option [ngValue]="'noSelection'" [selected]="true">Select a person</option>
           <!-- Opzione per rimuovere l'assegnazione con valore specifico -->
-          <option [ngValue]="'removeAssign'" *ngIf="todo.assignedTo">
-            Remove assign
-          </option>
+          <option [ngValue]="'removeAssign'" *ngIf="todo.assignedTo">Remove assign</option>
           <!-- Lista utenti con ID come valore -->
           <option *ngFor="let user of users" [ngValue]="user.id">
             {{ user.fullName }}
