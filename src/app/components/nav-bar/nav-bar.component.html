@@ -16,11 +16,7 @@
     <div (click)="toggleDropdown()" class="username">{{ fullName }}</div>
     <!-- User icon -->
     <div class="user-icon-container">
-      <app-user-avatar
-        (click)="toggleDropdown()"
-        [user]="user"
-        [size]="35"
-      ></app-user-avatar>
+      <app-user-avatar (click)="toggleDropdown()" [user]="user" [size]="35"></app-user-avatar>
     </div>
 
     <!-- Dropdown-->
