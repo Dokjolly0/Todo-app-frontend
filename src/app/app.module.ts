@@ -17,6 +17,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 import { EditTodoComponent } from './components/edit-todo/edit-todo.component';
+import { HomeRedirectComponent } from './components/home-redirect/home-redirect.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { EditTodoComponent } from './components/edit-todo/edit-todo.component';
     TodoItemComponent,
     UserAvatarComponent,
     EditTodoComponent,
+    HomeRedirectComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
