@@ -8,7 +8,7 @@
 
 # CircleCI temporary file for cache key computation.
 # See `save_month_to_file` in `.circleci/config.yml`.
-month.txt
+/month.txt
 
 # Include when developing application packages.
 pubspec.lock
