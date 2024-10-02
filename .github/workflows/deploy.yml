@@ -22,10 +22,10 @@ jobs:
         run: npm install
 
       - name: Build Angular app
-        run: npm run build -- --prod --base-href="/Todo-app-frontend/"
+        run: ng build --configuration production --base-href="/Todo-app-frontend/" # Modifica qui
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/frontend # La cartella della build della tua app
+          publish_dir: ./dist/frontend # Assicurati che il percorso della cartella di output sia corretto
