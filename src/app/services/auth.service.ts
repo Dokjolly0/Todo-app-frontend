@@ -10,29 +10,23 @@ import { RegisterData } from '../entity/register.entity';
 export class AuthService {
   private token: string | null = null;
   private user: any | null = null;
+  url: string = 'http://159.223.142.172:3000/api'; // URL del server
+
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
-    return this.http
-      .post<any>('http://localhost:3000/api/login', { username, password })
-      .pipe(
-        tap((response: any) => {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('user', JSON.stringify(response.user));
-          this.token = response.token;
-          this.user = response.user;
-        })
-      );
+    return this.http.post<any>(`${this.url}/login`, { username, password }).pipe(
+      tap((response: any) => {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        this.token = response.token;
+        this.user = response.user;
+      })
+    );
   }
 
   // 5 Proprieta separate
-  register(
-    firstName: string,
-    lastName: string,
-    picture: string,
-    username: string,
-    password: string
-  ): Observable<any>;
+  register(firstName: string, lastName: string, picture: string, username: string, password: string): Observable<any>;
   // 1 oggetto singolo
   register(data: RegisterData): Observable<any>;
   // Implement
@@ -44,7 +38,7 @@ export class AuthService {
     password?: string
   ): Observable<any> {
     if (typeof firstNameOrObj === 'string') {
-      return this.http.post<any>('http://localhost:3000/api/register', {
+      return this.http.post<any>(`${this.url}/register`, {
         firstName: firstNameOrObj,
         lastName,
         picture,
@@ -52,7 +46,7 @@ export class AuthService {
         password,
       });
     }
-    return this.http.post<any>('http://localhost:3000/api/register', firstNameOrObj);
+    return this.http.post<any>(`${this.url}/register`, firstNameOrObj);
   }
 
   isLoggedIn(): boolean {

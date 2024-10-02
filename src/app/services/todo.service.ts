@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, switchMap, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Todo } from '../entity/todo.entity';
 
 @Injectable({
@@ -8,11 +8,13 @@ import { Todo } from '../entity/todo.entity';
 })
 export class TodoService {
   private sharedData: any;
+  private url: string = 'http://159.223.142.172:3000/api'; // URL del server
+
   constructor(private http: HttpClient) {}
 
   getTodo(token: string, completed: boolean): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    let url = 'http://localhost:3000/api/todos';
+    let url = `${this.url}/todos`; // Utilizza l'URL definito
     if (completed) url += '?showCompleted=true';
 
     return this.http.get(url, { headers });
@@ -25,9 +27,7 @@ export class TodoService {
       assignedTo: todo.assignedTo ? todo.assignedTo.id : undefined, // Solo l'ID
     };
 
-    return this.http.post('http://localhost:3000/api/todos', newTodo, {
-      headers,
-    });
+    return this.http.post(`${this.url}/todos`, newTodo, { headers });
   }
 
   setSharedData(data: any) {
@@ -50,38 +50,35 @@ export class TodoService {
 
   findUserByFullName(token: string, fullName: string) {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = 'http://localhost:3000/api/users/user/:fullName'; // URL con :fullName come placeholder
-    const params = { fullName: fullName };
+    const url = `${this.url}/users/user/${fullName}`; // Usa l'URL definito
 
-    return this.http.get(url, { headers, params });
+    return this.http.get(url, { headers });
   }
 
   checkTodo(token: string, id: string, completed: boolean) {
-    let completed_param = '';
-    if (completed === true) completed_param = 'check';
-    else completed_param = 'uncheck';
+    let completed_param = completed ? 'check' : 'uncheck';
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:3000/api/todos/${id}/${completed_param}`;
+    const url = `${this.url}/todos/${id}/${completed_param}`;
 
     return this.http.patch(url, {}, { headers });
   }
 
   getTodoByTitle(token: string, title: string) {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:3000/api/todos/title/${title}`;
+    const url = `${this.url}/todos/title/${title}`;
 
     return this.http.get<Todo[]>(url, { headers });
   }
 
   getById(token: string, id: string) {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:3000/api/todos/id/${id}`;
+    const url = `${this.url}/todos/id/${id}`;
 
     return this.http.get(url, { headers });
   }
 
   updateTodo(token: string, todo: Todo) {
-    const url = 'http://localhost:3000/api/todos/update';
+    const url = `${this.url}/todos/update`;
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const body = {
       ...todo,
@@ -93,7 +90,7 @@ export class TodoService {
   }
 
   assignTodo(id: string, assignedTo: string, token: string) {
-    const url = `http://localhost:3000/api/todos/${id}/assign`;
+    const url = `${this.url}/todos/${id}/assign`;
     const body = { assignedTo };
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
@@ -101,7 +98,7 @@ export class TodoService {
   }
 
   delate(id: string, token: string) {
-    const url = `http://localhost:3000/api/todos/delete/${id}`;
+    const url = `${this.url}/todos/delete/${id}`;
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     return this.http.delete(url, { headers });
