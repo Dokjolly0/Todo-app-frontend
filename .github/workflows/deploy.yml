@@ -19,10 +19,10 @@ jobs:
           node-version: "16" # Usa la versione di Node.js compatibile con Angular
 
       - name: Install dependencies
-        run: npm install
+        run: npm install # Questo comando installerà le dipendenze definite in package.json
 
       - name: Build Angular app
-        run: ng build --configuration production --base-href="/Todo-app-frontend/" # Modifica qui
+        run: npx ng build --configuration production --base-href="/Todo-app-frontend/" # Usa npx per eseguire Angular CLI
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
