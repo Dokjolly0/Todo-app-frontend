@@ -28,5 +28,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.MY_GITHUB_TOKEN }} # Usa il token predefinito
-          publish_dir: ./dist/frontend # Assicurati che il percorso della cartella di output sia corretto
+          publish_dir: ./dist/frontend/browser # Assicurati che il percorso della cartella di output sia corretto
           publish_branch: gh-pages # Specifica il branch di pubblicazione
