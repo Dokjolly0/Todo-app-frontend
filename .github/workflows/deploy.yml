@@ -22,7 +22,7 @@ jobs:
         run: npm install # Questo comando installerà le dipendenze definite in package.json
 
       - name: Build Angular app
-        run: npx ng build --configuration production --base-href="/Todo-app-frontend/" # Usa npx per eseguire Angular CLI
+        run: npx ng build --configuration production # Usa npx per eseguire Angular CLI
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
