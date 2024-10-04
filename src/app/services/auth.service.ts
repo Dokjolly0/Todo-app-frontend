@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { RegisterData } from '../entity/register.entity';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { RegisterData } from '../entity/register.entity';
 export class AuthService {
   private token: string | null = null;
   private user: any | null = null;
-  url: string = 'http://159.223.142.172:3000/api'; // URL del server
+  url: string = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
