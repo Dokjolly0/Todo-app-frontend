@@ -9,18 +9,13 @@ import { Title } from '@angular/platform-browser'; // Importa il servizio Title
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private titleSrv: Title
-  ) {}
+  constructor(private authService: AuthService, private router: Router, private titleSrv: Title) {}
   username: string = '';
   password: string = '';
   passwordVisible: boolean = false;
   pageTitle = 'Login todo app';
 
   ngOnInit(): void {
-    this.fixWidth();
     this.titleSrv.setTitle(this.pageTitle);
   }
 
@@ -35,14 +30,6 @@ export class LoginComponent {
         alert('Username o password errati');
       }
     );
-  }
-
-  fixWidth() {
-    const inputElement = document.getElementById('password') as HTMLInputElement;
-    const submitButton = document.getElementById('submit') as HTMLInputElement;
-
-    const width = inputElement.offsetWidth;
-    submitButton.style.width = `${width}px`;
   }
 
   togglePasswordVisibility() {

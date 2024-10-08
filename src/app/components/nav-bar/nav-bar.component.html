@@ -1,27 +1,62 @@
-<nav class="navbar">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
   <!-- Nome dell'app -->
-  <div class="app-name"><a href="/app/dashboard">Todo App</a></div>
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-primary" href="/app/dashboard">Todo App</a>
 
-  <!-- Ricerca todo e add button -->
-  <div class="todo-dashboard-container">
-    <app-nav-bar-todo-dashboard
-      [todos]="todos"
-      (searchChange)="forwardSearchChange($event)"
-      (incompleteFilterChange)="forwardIncompleteFilterChange($event)"
-    ></app-nav-bar-todo-dashboard>
-  </div>
+    <!-- Bottone toggle per mobile -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <!-- Sezione utente -->
-  <div class="user-section">
-    <div (click)="toggleDropdown()" class="username">{{ fullName }}</div>
-    <!-- User icon -->
-    <div class="user-icon-container">
-      <app-user-avatar (click)="toggleDropdown()" [user]="user" [size]="35"></app-user-avatar>
-    </div>
+    <!-- Container centrale -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="d-flex flex-wrap align-items-center mx-auto justify-content-center">
+        <input
+          type="text"
+          class="form-control me-2"
+          placeholder="Cerca todo..."
+          [(ngModel)]="inputSearch"
+          (input)="onSearchChange()"
+          style="width: 200px"
+        />
+        <button class="btn btn-primary me-2" id="add-todo-btn">Aggiungi todo</button>
+        <div class="form-check d-flex align-items-center mb-0">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [(ngModel)]="showIncompleteOnly"
+            (change)="onIncompleteFilterChange()"
+            id="showIncomplete"
+            checked
+          />
+          <label class="form-check-label ms-2" for="showIncomplete">Solo incompleti</label>
+        </div>
+      </div>
 
-    <!-- Dropdown-->
-    <div class="dropdown-menu" [ngClass]="{ show: isDropdownOpen }">
-      <a (click)="logout()">Logout</a>
+      <!-- Sezione utente -->
+      <div class="d-flex align-items-center">
+        <!-- Nome utente con data-bs-toggle -->
+        <span class="me-2 username" data-bs-toggle="dropdown" aria-expanded="false" id="userDropdown">
+          {{ fullName }}
+        </span>
+        <!-- Avatar con data-bs-toggle -->
+        <div class="dropdown">
+          <a href="#" class="d-block" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <app-user-avatar [user]="user" [size]="35"></app-user-avatar>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="#" (click)="logout()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </nav>

@@ -13,12 +13,9 @@ import { RegisterData } from '../../entity/register.entity';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private titleSrv: Title
-  ) {}
-  //Property
+  constructor(private authService: AuthService, private router: Router, private titleSrv: Title) {}
+
+  // Proprietà
   pageTitle = 'Register todo app';
   registerData: RegisterData = {
     firstName: '',
@@ -33,17 +30,31 @@ export class RegisterComponent {
   validUrlPicture: boolean = true;
   validEmailUsername: boolean = true;
 
-  //OnInit
+  // OnInit
   ngOnInit(): void {
-    this.fixWidth();
     this.titleSrv.setTitle(this.pageTitle);
   }
 
-  //Method
-  register(form: NgForm) {
+  // Metodo per validare l'URL dell'immagine
+  validateUrlPicture() {
     this.validUrlPicture = isValidUrl(this.registerData.picture);
+  }
+
+  // Metodo per validare l'email
+  validateEmailUsername() {
     this.validEmailUsername = isValidEmail(this.registerData.username);
-    if (form.valid && this.validUrlPicture && this.validEmailUsername) {
+  }
+
+  // Metodo per la registrazione
+  register(form: NgForm) {
+    this.validateUrlPicture();
+    this.validateEmailUsername();
+    if (
+      form.valid &&
+      this.validUrlPicture &&
+      this.validEmailUsername &&
+      this.checkPassword === this.registerData.password
+    ) {
       this.authService.register(this.registerData).subscribe(
         (res) => {
           this.router.navigate(['/signin']);
@@ -51,23 +62,6 @@ export class RegisterComponent {
         (err) => console.log(err)
       );
     }
-  }
-
-  fixWidth() {
-    const inputElement = document.getElementById('password') as HTMLInputElement;
-    const submitButton = document.getElementById('submit') as HTMLInputElement;
-    const width = inputElement.offsetWidth;
-    submitButton.style.width = `${width}px`;
-  }
-
-  getErrorMessages(): string {
-    const messages = [];
-    if (this.checkPassword === '') messages.push('Please confirm your password');
-    if (this.checkPassword !== this.registerData.password)
-      messages.push('Passwords do not match');
-    if (this.checkPassword.length < 8)
-      messages.push('Password lenght must be at least 8 character');
-    return messages.join('   &   ');
   }
 
   togglePasswordVisibility() {

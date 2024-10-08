@@ -1,51 +1,56 @@
-<div class="body">
-  <div class="login-box">
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+  <div class="login-box card p-4 shadow-lg">
     <div class="login-header">
-      <header>Login</header>
+      <h2 class="text-center">Login</h2>
     </div>
-    <div class="input-box">
-      <input
-        type="email"
-        class="input-field"
-        placeholder="Username"
-        [(ngModel)]="username"
-        autocomplete="off"
-        required
-      />
-    </div>
-    <div class="input-box">
-      <input
-        type="password"
-        class="input-field"
-        placeholder="Password"
-        [(ngModel)]="password"
-        autocomplete="off"
-        required
-        id="password"
-      />
-      <i
-        class="material-icons toggle-password"
-        (click)="togglePasswordVisibility()"
-        >visibility</i
-      >
-      <!-- Icona occhio -->
-    </div>
-    <div class="forgot">
-      <section>
-        <input type="checkbox" id="check" class="custom-checkbox" />
-        <label for="check" class="custom-label"></label>
-        <span class="label-text">Remember</span>
-      </section>
-      <section>
-        <a href="/">Forgot password</a>
-      </section>
-    </div>
-    <div class="input-submit">
-      <button class="submit-btn" id="submit" (click)="login()"></button>
-      <label for="submit">Login</label>
-    </div>
-    <div class="sign-up-link">
-      <p>Don't have account? <a href="/signup">Sign Up</a></p>
-    </div>
+    <form (ngSubmit)="login()">
+      <div class="mb-3">
+        <input
+          type="email"
+          class="form-control form-control-lg"
+          placeholder="Username"
+          [(ngModel)]="username"
+          name="username"
+          required
+          autocomplete="off"
+        />
+      </div>
+      <div class="mb-3 position-relative">
+        <input
+          type="password"
+          class="form-control form-control-lg"
+          placeholder="Password"
+          [(ngModel)]="password"
+          name="password"
+          required
+          autocomplete="off"
+          id="password"
+        />
+        <i
+          class="material-icons position-absolute top-50 end-0 translate-middle-y pe-3 toggle-password"
+          (click)="togglePasswordVisibility()"
+        >
+          visibility
+        </i>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="rememberMe" />
+          <label class="form-check-label" for="rememberMe">Remember me</label>
+        </div>
+        <div>
+          <a [routerLink]="['/reset-password']" class="text-decoration-none">Forgot password?</a>
+        </div>
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-dark btn-lg">Login</button>
+      </div>
+      <div class="text-center mt-3">
+        <p>
+          Don't have an account?
+          <a [routerLink]="['/signup']" class="text-decoration-none fw-bold">Sign Up</a>
+        </p>
+      </div>
+    </form>
   </div>
 </div>

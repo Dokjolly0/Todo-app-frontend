@@ -4,12 +4,8 @@
   (incompleteFilterChange)="handleIncompleteFilterChange()"
 ></app-nav-bar>
 
-<!-- Popup add todo-->
-<app-add-todo
-  *ngIf="addTodoPopup"
-  (close)="closePopup()"
-  (addTodo)="handleAddTodo($event)"
-></app-add-todo>
+<!-- Popup add todo -->
+<app-add-todo *ngIf="addTodoPopup" (close)="closePopup()" (addTodo)="handleAddTodo($event)"></app-add-todo>
 
 <!-- Popup Edit Todo -->
 <app-edit-todo
@@ -19,12 +15,19 @@
   (save)="handleEditTodoSave($event)"
 ></app-edit-todo>
 
-<main>
-  <div *ngFor="let todo of todos">
-    <app-todo-item
-      (edit)="onEditTodo($event)"
-      (deleteSuccess)="handleDeleteSuccess()"
-      [todo]="todo"
-    ></app-todo-item>
+<main class="container my-4">
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let todo of todos">
+      <div class="card h-100">
+        <!-- Aggiunto h-100 per altezza uniforme -->
+        <div class="card-body">
+          <app-todo-item
+            (edit)="onEditTodo($event)"
+            (deleteSuccess)="handleDeleteSuccess()"
+            [todo]="todo"
+          ></app-todo-item>
+        </div>
+      </div>
+    </div>
   </div>
 </main>

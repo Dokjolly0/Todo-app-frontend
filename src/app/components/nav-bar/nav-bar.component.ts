@@ -10,14 +10,17 @@ import { Todo } from '../../entity/todo.entity';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent {
-  constructor(private authService: AuthService, private router: Router) {}
   @Input() todos!: Todo[];
-  fullName: string = '';
-  userInitials: string = ''; //Variabile che controlla le iniziali di nome e cognome
-  isDropdownOpen: boolean = false; //Variabile che permette di controllare se il menu è aperto o chiuso
-  useDefaultAvatar: boolean = false;
   @Output() searchChange = new EventEmitter<string>();
   @Output() incompleteFilterChange = new EventEmitter<boolean>();
+
+  fullName: string = '';
+  userInitials: string = '';
+  isDropdownOpen: boolean = false;
+  useDefaultAvatar: boolean = false;
+  inputSearch: string = '';
+  showIncompleteOnly: boolean = true; // Checkbox di default true (mostra solo incompleti)
+
   user: User = {
     firstName: '',
     lastName: '',
@@ -25,24 +28,21 @@ export class NavBarComponent {
     picture: '',
   };
 
+  constructor(private authService: AuthService, private router: Router) {}
+
   ngOnInit() {
     this.user = this.authService.getUser();
     if (!this.user.picture) this.useDefaultAvatar = true;
     this.userInitials = this.getInitials(this.user.firstName, this.user.lastName);
+    this.fullName = `${this.user.firstName} ${this.user.lastName}`;
   }
 
   getInitials(firstName: string, lastName: string): string {
-    this.fullName = `${firstName} ${lastName}`;
     return firstName[0] + lastName[0];
-  }
-
-  showDefaultAvatar() {
-    this.useDefaultAvatar = true;
   }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
-    //Se cliccata, inverte isDropdownOpen
   }
 
   logout() {
@@ -58,11 +58,11 @@ export class NavBarComponent {
     }
   }
 
-  // nav bar todo dashboard component
-  forwardSearchChange(searchTerm: string) {
-    this.searchChange.emit(searchTerm); // Passa il valore di ricerca al componente padre
+  onSearchChange() {
+    this.searchChange.emit(this.inputSearch);
   }
-  forwardIncompleteFilterChange(showIncompleteOnly: boolean) {
-    this.incompleteFilterChange.emit(showIncompleteOnly);
+
+  onIncompleteFilterChange() {
+    this.incompleteFilterChange.emit(this.showIncompleteOnly);
   }
 }

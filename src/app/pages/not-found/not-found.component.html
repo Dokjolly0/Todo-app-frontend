@@ -1,6 +1,7 @@
-<!-- not-found.component.html -->
-<div class="not-found">
-  <h1>404</h1>
-  <p>Page Not Found</p>
-  <a routerLink="/app/dashboard">Go to Home</a>
+<div class="container text-center d-flex flex-column justify-content-center align-items-center vh-100">
+  <h1 class="display-1 fw-bold">404</h1>
+  <p class="lead mb-4">Page Not Found</p>
+  <a [routerLink]="redirectUrl" class="btn btn-primary btn-lg">
+    {{ redirectText }}
+  </a>
 </div>

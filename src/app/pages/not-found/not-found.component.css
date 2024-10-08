@@ -1,20 +1,5 @@
-/* not-found.component.css */
-.not-found {
-  text-align: center;
-  padding: 50px;
-}
-
-.not-found h1 {
-  font-size: 100px;
-  margin: 0;
-}
-
-.not-found p {
-  font-size: 24px;
-}
-
+/* Non sono necessarie molte personalizzazioni con Bootstrap */
 .not-found a {
-  font-size: 18px;
-  color: #4285f4;
-  text-decoration: none;
+  color: white; /* Il colore del testo del pulsante è bianco */
+  text-decoration: none; /* Nessuna sottolineatura per il link */
 }

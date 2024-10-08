@@ -1,74 +1,64 @@
-<div class="todo-item" #todoItem>
-  <div class="header">
-    <h3>{{ todo.title }}</h3>
+<div class="card todo-item" #todoItem>
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3 class="m-0 text-danger">{{ todo.title }}</h3>
   </div>
-  <div class="info">
-    <!-- Creation date -->
-    <p>
-      <strong>Creation date:</strong>
-      {{ todo.creationDate }}
-    </p>
-    <!-- Due date -->
-    <p *ngIf="todo.dueDate">
-      <strong>Due Date:</strong>
-      {{ todo.dueDate }}
-    </p>
-    <p *ngIf="!todo.dueDate">
-      <strong>Due Date:</strong>
-      Nessuna data di scadenza
-    </p>
-    <!-- Expired -->
-    <p *ngIf="todo.expired">
-      <strong>Expired:</strong>
-      Scaduto
-    </p>
-    <p *ngIf="!todo.expired">
-      <strong>Expired:</strong>
-      Non scaduto
-    </p>
-    <!-- Completed -->
-    <p class="completed">
-      <strong>Completed:</strong>
-      <input
-        type="checkbox"
-        [checked]="todo.completed"
-        class="completed-checkbox"
-        id="completed"
-        (change)="onToggleComplete()"
-      />
-      <br />
-    </p>
-    <p>
-      <!-- CreatedBy -->
-      <strong>Created By:</strong>
-      <!-- Aggiungi uno spazio qui -->
-      <app-user-avatar [user]="todo.createdBy!" [size]="30"></app-user-avatar>
-      <span class="assigned-name">
-        {{ todo.createdBy?.fullName }}
-        <!-- Se è l'utente attivo aggiungi (me) -->
+  <div class="card-body">
+    <div class="info mb-3">
+      <p>
+        <strong>Creation date:</strong>
+        {{ todo.creationDate }}
+      </p>
+      <p *ngIf="todo.dueDate">
+        <strong>Due Date:</strong>
+        {{ todo.dueDate }}
+      </p>
+      <p *ngIf="!todo.dueDate">
+        <strong>Due Date:</strong>
+        Nessuna data di scadenza
+      </p>
+      <p *ngIf="todo.expired">
+        <strong>Expired:</strong>
+        Scaduto
+      </p>
+      <p *ngIf="!todo.expired">
+        <strong>Expired:</strong>
+        Non scaduto
+      </p>
+      <p class="completed">
+        <strong>Completed:</strong>
+        <input
+          type="checkbox"
+          [checked]="todo.completed"
+          class="form-check-input ms-2 completed-checkbox"
+          id="completed"
+          (change)="onToggleComplete()"
+        />
+      </p>
+      <p class="d-flex align-items-center">
+        <strong>Created By:</strong>
+        <app-user-avatar [user]="todo.createdBy!" [size]="30" class="ms-2"></app-user-avatar>
+        <span class="assigned-name ms-1">{{ todo.createdBy?.fullName }}</span>
         <ng-container *ngIf="user.id === todo.createdBy!.id">(me)</ng-container>
-      </span>
-    </p>
-    <p>
-      <!-- AssignedTo -->
-      <strong>Assigned To:</strong>
-      <!-- Aggiungi uno spazio qui -->
-      <ng-container *ngIf="todo.assignedTo; else noAssignment">
-        <app-user-avatar [user]="todo.assignedTo" [size]="30"></app-user-avatar>
-        <span class="assigned-name">
-          {{ todo.assignedTo.fullName }}
-          <!-- Se è l'utente attivo aggiungi (me) -->
+      </p>
+      <p class="d-flex align-items-center">
+        <strong>Assigned To:</strong>
+        <ng-container *ngIf="todo.assignedTo; else noAssignment">
+          <app-user-avatar [user]="todo.assignedTo" [size]="30" class="ms-2"></app-user-avatar>
+          <span class="assigned-name ms-1">{{ todo.assignedTo.fullName }}</span>
           <ng-container *ngIf="user.id === todo.assignedTo?.id">(me)</ng-container>
-        </span>
-        <!-- Aggiungi una classe se serve -->
-      </ng-container>
-      <ng-template #noAssignment>
-        <span>todo non assegnato</span>
-      </ng-template>
-    </p>
+        </ng-container>
+        <ng-template #noAssignment>
+          <span>todo non assegnato</span>
+        </ng-template>
+      </p>
+    </div>
   </div>
-  <div class="actions">
-    <button (click)="onEdit()">Edit</button>
-    <button (click)="onDelete()">Delete</button>
+  <div class="card-footer d-flex">
+    <div class="col-6">
+      <button class="btn btn-primary w-100 me-2" (click)="onEdit()">Edit</button>
+    </div>
+    <div class="col-6">
+      <button class="btn btn-danger w-100 ms-2" (click)="onDelete()">Delete</button>
+    </div>
   </div>
 </div>

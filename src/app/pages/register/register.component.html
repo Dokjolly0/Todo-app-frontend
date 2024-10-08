@@ -1,19 +1,14 @@
-<div class="body">
-  <div class="login-box">
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+  <div class="login-box card p-4 shadow-lg">
     <div class="login-header">
-      <header>Register</header>
+      <h2 class="text-center">Register</h2>
     </div>
     <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
-      <div class="input-box">
-        <div
-          *ngIf="registerForm.submitted && !registerData.firstName"
-          class="error-message"
-        >
-          Name is required
-        </div>
+      <div class="mb-3">
+        <div *ngIf="registerForm.submitted && !registerData.firstName" class="error-message">Name is required</div>
         <input
           type="text"
-          class="input-field"
+          class="form-control"
           placeholder="Name"
           [(ngModel)]="registerData.firstName"
           name="firstName"
@@ -21,16 +16,12 @@
           required
         />
       </div>
-      <div class="input-box">
-        <div
-          *ngIf="registerForm.submitted && !registerData.lastName"
-          class="error-message"
-        >
-          Surname is required
-        </div>
+
+      <div class="mb-3">
+        <div *ngIf="registerForm.submitted && !registerData.lastName" class="error-message">Surname is required</div>
         <input
           type="text"
-          class="input-field"
+          class="form-control"
           placeholder="Surname"
           [(ngModel)]="registerData.lastName"
           name="lastName"
@@ -38,101 +29,99 @@
           required
         />
       </div>
-      <div class="input-box">
-        <div
-          *ngIf="(registerForm.submitted && !registerData.picture) || !validUrlPicture"
-          class="error-message"
-        >
-          Picture URL is required and must be a url (https://www.example.com)
+
+      <div class="mb-3">
+        <div *ngIf="(registerForm.submitted && !registerData.picture) || !validUrlPicture" class="error-message">
+          Picture URL is required and must be a valid URL
         </div>
         <input
           type="url"
-          class="input-field"
+          class="form-control"
           placeholder="Picture"
           [(ngModel)]="registerData.picture"
+          (ngModelChange)="validateUrlPicture()"
           name="picture"
           autocomplete="off"
           required
         />
       </div>
-      <div class="input-box">
-        <div
-          *ngIf="
-            (registerForm.submitted && !registerData.username) || !validEmailUsername
-          "
-          class="error-message"
-        >
-          Username is required and must be a email (tryal&#64;user.com)
+
+      <div class="mb-3">
+        <div *ngIf="(registerForm.submitted && !registerData.username) || !validEmailUsername" class="error-message">
+          Username is required and must be a valid email
         </div>
         <input
           type="email"
-          class="input-field"
+          class="form-control"
           placeholder="Username"
           [(ngModel)]="registerData.username"
+          (ngModelChange)="validateEmailUsername()"
           name="username"
           autocomplete="off"
           required
         />
       </div>
-      <div class="input-box">
+
+      <!-- Campo Password -->
+      <div class="mb-3 position-relative">
         <div
-          *ngIf="
-            (registerForm.submitted && !registerData.password) ||
-            (registerForm.submitted && registerData.password.length < 8)
-          "
+          *ngIf="registerForm.submitted && (!registerData.password || registerData.password.length < 8)"
           class="error-message"
         >
-          Password is required and must be at least 8 character
+          Password must be at least 8 characters
         </div>
-        <input
-          type="password"
-          class="input-field"
-          placeholder="Password"
-          [(ngModel)]="registerData.password"
-          name="password"
-          autocomplete="off"
-          required
-          id="password"
-        />
-        <i class="material-icons toggle-password" (click)="togglePasswordVisibility()">
-          visibility
-        </i>
-      </div>
-      <div class="input-box">
-        <div
-          *ngIf="
-            (registerForm.submitted && !checkPassword) ||
-            (registerForm.submitted && checkPassword.length < 8) ||
-            registerData.password !== checkPassword
-          "
-          class="error-message"
-        >
-          {{ getErrorMessages() }}
+        <div class="position-relative">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            [(ngModel)]="registerData.password"
+            name="password"
+            autocomplete="off"
+            required
+            id="password"
+            [type]="passwordVisible ? 'text' : 'password'"
+          />
+          <div class="eye-icon">
+            <app-eyes-icon (state)="togglePasswordVisibility()" size="25px"></app-eyes-icon>
+          </div>
         </div>
-        <input
-          type="password"
-          class="input-field"
-          placeholder="Check password"
-          [(ngModel)]="checkPassword"
-          name="checkPassword"
-          autocomplete="off"
-          required
-          id="check-password"
-        />
-        <i
-          class="material-icons toggle-password"
-          (click)="toggleCheckPasswordVisibility()"
-        >
-          visibility
-        </i>
       </div>
-      <div class="input-submit">
-        <button type="submit" class="submit-btn" id="submit">Sign Up</button>
+
+      <!-- Campo Conferma Password -->
+      <div class="mb-3 position-relative">
+        <div *ngIf="registerForm.submitted && checkPassword !== registerData.password" class="error-message">
+          Passwords do not match
+        </div>
+        <div *ngIf="registerForm.submitted && checkPassword.length < 8" class="error-message">
+          Password confirmation must be at least 8 characters
+        </div>
+        <div class="position-relative">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Check password"
+            [(ngModel)]="checkPassword"
+            name="checkPassword"
+            autocomplete="off"
+            required
+            id="check-password"
+            [type]="passwordCheckVisible ? 'text' : 'password'"
+          />
+          <div class="eye-icon">
+            <app-eyes-icon (state)="toggleCheckPasswordVisibility()" size="25px"></app-eyes-icon>
+          </div>
+        </div>
       </div>
-      <div class="sign-up-link">
+
+      <div class="d-grid mb-3">
+        <button type="submit" class="btn btn-dark">Sign Up</button>
+      </div>
+
+      <div class="text-center">
         <p>
           Have an account?
-          <a href="/signin">Login</a>
+          <a [routerLink]="['/signin']" class="text-decoration-none">Login</a>
         </p>
       </div>
     </form>

@@ -1,163 +1,47 @@
-.body {
+/* Sfondo del contenitore principale */
+.container-fluid {
+  /* background: linear-gradient(to bottom right, #eceed0, #a5d36f); */
+  background-image: url("../../../assets/todo_img.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(243, 244, 245);
 }
+
+/* Login box styling */
 .login-box {
-  display: flex;
-  background-color: rgb(234, 239, 244);
   border: 2px solid black;
-  border-radius: 35px;
-  justify-content: center;
-  flex-direction: column;
-  width: 440px;
-  height: 350px;
-  padding: 140px;
+  background-color: rgb(234, 239, 244);
+  border-radius: 15px;
+  padding: 40px; /* Aumenta il padding per il box */
+  max-width: 400px; /* Imposta una larghezza massima per il box */
+  width: 100%; /* Fai in modo che il box occupi il 100% della larghezza disponibile */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Aggiungi un'ombra per far risaltare il box */
 }
-.login-header {
-  text-align: center;
-  margin: 20px 0 40px 0;
+
+/* Aumenta la dimensione del testo nei titoli */
+.login-header h2 {
+  font-size: 24px; /* Dimensione del font per l'intestazione */
 }
-.login-header header {
-  color: #333;
-  font-size: 30px;
-  font-weight: 600;
+
+/* Aumenta la dimensione del testo dei pulsanti */
+.btn-dark {
+  padding: 15px 30px; /* Aumenta il padding per il pulsante */
+  font-size: 18px; /* Aumenta la dimensione del font per il pulsante */
 }
-.input-box .input-field {
-  width: 100%;
-  height: 60px;
-  font-size: 17px;
-  padding: 0 25px;
-  margin-bottom: 15px;
-  border-radius: 30px;
-  border: none;
-  box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.05);
-  outline: none;
-  transition: 0.3s;
-}
-::placeholder {
-  font-weight: 500;
-  color: #222;
-}
-.input-field:focus {
-  width: 105%;
-}
-.forgot {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 40px;
-}
-section {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: #555;
-}
-#check {
-  margin-right: 10px;
-}
-a {
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-section a {
-  color: #555;
-}
-.input-submit {
-  position: relative;
-}
-.submit-btn {
-  width: 100%;
-  height: 60px;
-  background: #222;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.input-submit label {
-  position: absolute;
-  top: 45%;
-  left: 50%;
-  color: #fff;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-}
-.submit-btn:hover {
-  background: #000;
-  transform: scale(1.05, 1);
-}
-.sign-up-link {
-  text-align: center;
-  font-size: 15px;
-  margin-top: 20px;
-}
-.sign-up-link a {
-  color: #000;
-  font-weight: 600;
-}
-.input-box {
-  position: relative;
+
+/* Aumenta la dimensione del testo degli input */
+.form-control {
+  font-size: 18px; /* Dimensione del font per gli input */
+  padding: 15px; /* Aumenta il padding interno degli input */
 }
 
 /* Icona occhio */
 .toggle-password {
-  position: absolute;
-  right: 15px;
-  top: 42%;
-  transform: translateY(-50%);
   cursor: pointer;
   font-size: 25px;
   color: #555;
 }
 .toggle-password:hover {
   color: #000; /* Colore dell'icona al passaggio del mouse */
-}
-
-/* Remember me */
-.custom-checkbox {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-/* Stile per l'etichetta associata al checkbox */
-.custom-label {
-  position: relative;
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%; /* Crea un cerchio */
-  background-color: #ccc; /* Colore di sfondo del pallino */
-  vertical-align: middle; /* Allinea verticalmente il pallino con il testo */
-}
-/* Stato del checkbox non selezionato */
-.custom-label::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: #fff; /* Colore del pallino interno */
-  display: none; /* Nasconde il pallino interno inizialmente */
-}
-/* Stato del checkbox selezionato */
-.custom-checkbox:checked + .custom-label::before {
-  display: block; /* Mostra il pallino interno quando selezionato */
-}
-.custom-checkbox:checked + .custom-label {
-  background-color: #000; /* Colore di sfondo del pallino quando selezionato */
-}
-/* Margine a sinistra per il testo "Remember me" */
-.custom-label + .label-text {
-  margin-left: 10px; /* Aggiungi margine a sinistra */
-  vertical-align: middle; /* Allinea verticalmente con il pallino */
 }
