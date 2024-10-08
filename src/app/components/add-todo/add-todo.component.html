@@ -1,10 +1,10 @@
 <div class="popup" (click)="closePopup()">
   <div class="popup-content" (click)="$event.stopPropagation()">
-    <h1>Aggiungi Todo</h1>
+    <h1 class="text-center">Aggiungi Todo</h1>
     <form #todoForm="ngForm" (ngSubmit)="onSubmit(todoForm)">
       <!-- Titolo -->
-      <div>
-        <label for="title">Titolo:</label>
+      <div class="mb-3">
+        <label for="title" class="form-label">Titolo:</label>
         <input
           id="title"
           name="title"
@@ -13,29 +13,16 @@
           required
           minlength="3"
           placeholder="Inserisci il titolo"
+          class="form-control"
         />
-        <div
-          *ngIf="title.invalid && (title.dirty || title.touched)"
-          class="error"
-        >
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="error">
           Title is required and must be at least 3 characters long.
         </div>
       </div>
 
-      <!-- <div>
-        <label for="description">Descrizione:</label>
-        <textarea
-          id="description"
-          name="description"
-          [(ngModel)]="todo.description"
-          placeholder="Ancora da implementare"
-          disabled
-        ></textarea>
-      </div> -->
-
       <!-- Data di scadenza -->
-      <div>
-        <label for="dueDate">Data di Scadenza:</label>
+      <div class="mb-3">
+        <label for="dueDate" class="form-label">Data di Scadenza:</label>
         <input
           id="dueDate"
           name="dueDate"
@@ -43,18 +30,17 @@
           #dueDate="ngModel"
           type="date"
           [min]="minDate"
+          class="form-control"
         />
-        <div
-          *ngIf="dueDate.invalid && (dueDate.dirty || dueDate.touched)"
-          class="error"
-        >
+        <div *ngIf="dueDate.invalid && (dueDate.dirty || dueDate.touched)" class="error">
           Please select a valid date (cannot be in the past).
         </div>
       </div>
 
-      <div>
-        <label for="assignedTo">Assegna a:</label>
-        <select id="assignedTo" name="assignedTo" [(ngModel)]="assignedToId">
+      <!-- Assegna a -->
+      <div class="mb-3">
+        <label for="assignedTo" class="form-label">Assegna a:</label>
+        <select id="assignedTo" name="assignedTo" [(ngModel)]="assignedToId" class="form-select">
           <option value="" selected>Seleziona una persona</option>
           <option *ngFor="let user of users" [value]="user.id">
             {{ user.fullName }}
@@ -62,10 +48,10 @@
         </select>
       </div>
 
-      <button id="submit" type="submit" [disabled]="todoForm.invalid">
-        Aggiungi
-      </button>
-      <button type="button" (click)="closePopup()">Annulla</button>
+      <div class="d-flex justify-content-between">
+        <button id="submit" type="submit" class="btn btn-primary" [disabled]="todoForm.invalid">Aggiungi</button>
+        <button type="button" (click)="closePopup()" class="btn btn-secondary">Annulla</button>
+      </div>
     </form>
   </div>
 </div>

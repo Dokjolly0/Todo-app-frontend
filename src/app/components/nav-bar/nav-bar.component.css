@@ -11,3 +11,13 @@
 .dropdown-menu {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
+@media (max-width: 576px) {
+  .navbar {
+    padding: 10px; /* Adatta il padding per mobile */
+  }
+
+  .form-control {
+    width: 100px; /* Riduci la larghezza del campo di input per mobile */
+  }
+}

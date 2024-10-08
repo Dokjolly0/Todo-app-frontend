@@ -1,10 +1,10 @@
 <div class="popup" (click)="closePopup()">
   <div class="popup-content" (click)="$event.stopPropagation()">
-    <h1>Modifica Todo</h1>
+    <h1 class="text-center">Modifica Todo</h1>
     <form #editForm="ngForm" (ngSubmit)="onSubmit(editForm)">
       <!-- Titolo -->
-      <div>
-        <label for="title">Title:</label>
+      <div class="mb-3">
+        <label for="title" class="form-label">Title:</label>
         <input
           id="title"
           name="title"
@@ -13,6 +13,7 @@
           required
           minlength="3"
           placeholder="Enter title"
+          class="form-control"
         />
         <div *ngIf="title.invalid && (title.dirty || title.touched)" class="error">
           Title is required and must be at least 3 characters long.
@@ -20,47 +21,55 @@
       </div>
 
       <!-- Data di scadenza -->
-      <div>
-        <label for="dueDate">Due Date:</label>
+      <div class="mb-3">
+        <label for="dueDate" class="form-label">Due Date:</label>
         <input
-          id="todo.dueDate"
+          id="dueDate"
           name="dueDate"
           [(ngModel)]="todo.dueDate"
           #dueDate="ngModel"
           type="date"
           [min]="minDate"
           [disabled]="isDueDateDisabled"
+          class="form-control"
         />
-        <label *ngIf="todo.dueDate" for="disableDueDate">Remove duedate:</label>
-        <input *ngIf="todo.dueDate" [(ngModel)]="isDueDateDisabled" type="checkbox" name="disableDueDate" />
+        <label *ngIf="todo.dueDate" for="disableDueDate" class="form-check-label mt-2">
+          Remove duedate:
+          <input
+            *ngIf="todo.dueDate"
+            [(ngModel)]="isDueDateDisabled"
+            type="checkbox"
+            name="disableDueDate"
+            class="form-check-input ms-2"
+          />
+        </label>
         <div *ngIf="dueDate.invalid && (dueDate.dirty || dueDate.touched)" class="error">
           Please select a valid date (cannot be in the past).
         </div>
       </div>
 
       <!-- Completed -->
-      <div>
-        <label for="completed">Completed:</label>
-        <input id="completed" name="completed" type="checkbox" [(ngModel)]="todo.completed" />
+      <div class="mb-3 form-check">
+        <input id="completed" name="completed" type="checkbox" [(ngModel)]="todo.completed" class="form-check-input" />
+        <label for="completed" class="form-check-label">Completed:</label>
       </div>
 
       <!-- Assegna a -->
-      <div>
-        <label for="assignedTo">Assigned To:</label>
-        <select id="assignedTo" name="assignedTo" [(ngModel)]="assignedToId">
-          <!-- Opzione di default con valore specifico -->
+      <div class="mb-3">
+        <label for="assignedTo" class="form-label">Assigned To:</label>
+        <select id="assignedTo" name="assignedTo" [(ngModel)]="assignedToId" class="form-select">
           <option [ngValue]="'noSelection'" [selected]="true">Select a person</option>
-          <!-- Opzione per rimuovere l'assegnazione con valore specifico -->
           <option [ngValue]="'removeAssign'" *ngIf="todo.assignedTo">Remove assign</option>
-          <!-- Lista utenti con ID come valore -->
           <option *ngFor="let user of users" [ngValue]="user.id">
             {{ user.fullName }}
           </option>
         </select>
       </div>
 
-      <button id="submit" type="submit" [disabled]="editForm.invalid">Save</button>
-      <button type="button" (click)="closePopup()">Cancel</button>
+      <div class="d-flex justify-content-end">
+        <button id="submit" type="submit" [disabled]="editForm.invalid" class="btn btn-primary me-2">Save</button>
+        <button type="button" (click)="closePopup()" class="btn btn-secondary">Cancel</button>
+      </div>
     </form>
   </div>
 </div>
