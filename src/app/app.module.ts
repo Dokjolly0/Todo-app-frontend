@@ -17,6 +17,7 @@ import { UserAvatarComponent } from './components/user-avatar/user-avatar.compon
 import { EditTodoComponent } from './components/edit-todo/edit-todo.component';
 import { HomeRedirectComponent } from './components/home-redirect/home-redirect.component';
 import { EyesIconComponent } from './components/eyes-icon/eyes-icon.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { EyesIconComponent } from './components/eyes-icon/eyes-icon.component';
     EditTodoComponent,
     HomeRedirectComponent,
     EyesIconComponent,
+    ResetPasswordComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, NgbModule],
   providers: [

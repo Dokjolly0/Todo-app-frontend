@@ -6,6 +6,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { authGuard } from './guards/auth.guard'; // Assicurati che sia importato correttamente
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { HomeRedirectComponent } from './components/home-redirect/home-redirect.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 
 const routes: Routes = [
   // Rotta root che utilizza il RedirectComponent
@@ -25,6 +26,8 @@ const routes: Routes = [
   // Register
   { path: 'signup', component: RegisterComponent },
   { path: 'register', redirectTo: 'signup' },
+  // Reset password
+  { path: 'reset-password', component: ResetPasswordComponent },
   // Gestione della rotta 404
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' },
