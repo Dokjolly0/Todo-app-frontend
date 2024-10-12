@@ -50,7 +50,7 @@
         <!-- Avatar con data-bs-toggle -->
         <div class="dropdown">
           <a href="#" class="d-block" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <app-user-avatar [user]="user" [size]="35"></app-user-avatar>
+            <app-user-avatar [user]="currentUser" [size]="35"></app-user-avatar>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
             <li><a class="dropdown-item" href="#" (click)="logout()">Logout</a></li>

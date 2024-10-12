@@ -38,14 +38,14 @@
         <strong>Created By:&nbsp;</strong>
         <app-user-avatar [user]="todo.createdBy!" [size]="30" class="ms-2"></app-user-avatar>
         <span class="assigned-name ms-1">{{ todo.createdBy?.fullName }}</span>
-        <ng-container *ngIf="user.id === todo.createdBy!.id">(me)</ng-container>
+        <ng-container *ngIf="currentUser.id === todo.createdBy!.id">(me)</ng-container>
       </p>
       <p class="d-flex align-items-center">
         <strong>Assigned To:&nbsp;</strong>
         <ng-container *ngIf="todo.assignedTo; else noAssignment">
           <app-user-avatar [user]="todo.assignedTo" [size]="30" class="ms-2"></app-user-avatar>
           <span class="assigned-name ms-1">{{ todo.assignedTo.fullName }}</span>
-          <ng-container *ngIf="user.id === todo.assignedTo?.id">(me)</ng-container>
+          <ng-container *ngIf="currentUser.id === todo.assignedTo?.id">(me)</ng-container>
         </ng-container>
         <ng-template #noAssignment>
           <span>todo non assegnato</span>

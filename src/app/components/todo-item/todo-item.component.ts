@@ -4,6 +4,8 @@ import { Todo } from '../../entity/todo.entity';
 import { TodoService } from '../../services/todo.service';
 import { fixDate } from '../../utils/functions/fixDate';
 import { JwtService } from '../../services/jwt.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-todo-item',
@@ -11,7 +13,12 @@ import { JwtService } from '../../services/jwt.service';
   styleUrl: './todo-item.component.css',
 })
 export class TodoItemComponent {
-  constructor(private todoService: TodoService, private jwtService: JwtService) {}
+  constructor(
+    private todoService: TodoService,
+    private jwtService: JwtService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
   @Input() todo!: Todo;
   @Output() delete = new EventEmitter<string>();
   @Output() toggleComplete = new EventEmitter<string>();
@@ -20,12 +27,14 @@ export class TodoItemComponent {
   @ViewChild('todoItem') todoItem!: ElementRef; // Riferimento all'elemento DOM
   // Variables
   token = this.jwtService.getToken();
-  userObj = localStorage.getItem('user');
-  user: User = JSON.parse(this.userObj!);
+  currentUser: User = undefined!;
   fullName: string = '';
   useDefaultAvatar: boolean = false;
 
   ngOnInit(): void {
+    this.authService.currentUser$.subscribe((user) => {
+      if (user) this.currentUser = user;
+    });
     if (this.todo.dueDate) this.todo.dueDate = fixDate(this.todo.dueDate);
     this.todo.creationDate = fixDate(this.todo.creationDate!, true);
   }

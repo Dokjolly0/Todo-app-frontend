@@ -28,8 +28,6 @@ export class LoginComponent {
   login() {
     this.authService.login(this.username, this.password).subscribe(
       () => {
-        const user = this.authService.getUser();
-        const token = this.jwtService.getToken();
         this.router.navigate(['/app/dashboard']);
       },
       (err: any) => {

@@ -1,18 +1,16 @@
-<div
-  class="user-icon-container"
-  [style.width.px]="size"
-  [style.height.px]="size"
->
-  <img
-    *ngIf="!useDefaultAvatar; else defaultIcon"
-    [src]="user.picture"
-    alt="User Avatar"
-    class="user-avatar"
-    (error)="showDefaultAvatar()"
-  />
-  <ng-template #defaultIcon>
-    <div class="user-icon" [style.width.px]="size" [style.height.px]="size">
-      {{ userInitials }}
-    </div>
-  </ng-template>
+<div *ngIf="user">
+  <div class="user-icon-container" [style.width.px]="size" [style.height.px]="size">
+    <img
+      *ngIf="!useDefaultAvatar; else defaultIcon"
+      [src]="user.picture"
+      alt="User Avatar"
+      class="user-avatar"
+      (error)="showDefaultAvatar()"
+    />
+    <ng-template #defaultIcon>
+      <div class="user-icon" [style.width.px]="size" [style.height.px]="size">
+        {{ userInitials }}
+      </div>
+    </ng-template>
+  </div>
 </div>

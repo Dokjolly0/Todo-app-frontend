@@ -20,21 +20,19 @@ export class NavBarComponent {
   useDefaultAvatar: boolean = false;
   inputSearch: string = '';
   showIncompleteOnly: boolean = true; // Checkbox di default true (mostra solo incompleti)
-
-  user: User = {
-    firstName: '',
-    lastName: '',
-    fullName: '',
-    picture: '',
-  };
+  currentUser: User = undefined!;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.user = this.authService.getUser();
-    if (!this.user.picture) this.useDefaultAvatar = true;
-    this.userInitials = this.getInitials(this.user.firstName, this.user.lastName);
-    this.fullName = `${this.user.firstName} ${this.user.lastName}`;
+    this.authService.currentUser$.subscribe((user) => {
+      if (user) this.currentUser = user;
+    });
+    if (this.currentUser) {
+      if (!this.currentUser.picture) this.useDefaultAvatar = true;
+      this.userInitials = this.getInitials(this.currentUser.firstName, this.currentUser.lastName);
+      this.fullName = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+    }
   }
 
   getInitials(firstName: string, lastName: string): string {

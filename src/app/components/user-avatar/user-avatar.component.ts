@@ -19,8 +19,10 @@ export class UserAvatarComponent implements OnInit {
   useDefaultAvatar: boolean = false; // Controlla se mostrare le iniziali invece dell'immagine
 
   ngOnInit() {
-    if (!this.user.picture) this.useDefaultAvatar = true;
-    this.userInitials = this.getInitials(this.user.firstName, this.user.lastName);
+    if (this.user) {
+      if (!this.user.picture) this.useDefaultAvatar = true;
+      this.userInitials = this.getInitials(this.user.firstName, this.user.lastName);
+    }
   }
 
   getInitials(firstName: string, lastName: string): string {
