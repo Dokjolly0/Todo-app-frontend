@@ -18,7 +18,7 @@ export class AuthService {
   login(username: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.url}/login`, { username, password }).pipe(
       tap((response: any) => {
-        localStorage.setItem('token', response.token);
+        localStorage.setItem('authToken', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
         this.token = response.token;
         this.user = response.user;
@@ -51,7 +51,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('authToken');
   }
 
   getUser(): any | null {
@@ -60,7 +60,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem('authToken');
   }
 
   isAuthenticated(): boolean {
@@ -68,7 +68,7 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('authToken');
     localStorage.removeItem('user');
     this.token = null;
     this.user = null;

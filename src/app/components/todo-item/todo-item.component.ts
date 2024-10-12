@@ -3,6 +3,7 @@ import { User } from '../../entity/user.entity';
 import { Todo } from '../../entity/todo.entity';
 import { TodoService } from '../../services/todo.service';
 import { fixDate } from '../../utils/functions/fixDate';
+import { JwtService } from '../../services/jwt.service';
 
 @Component({
   selector: 'app-todo-item',
@@ -10,7 +11,7 @@ import { fixDate } from '../../utils/functions/fixDate';
   styleUrl: './todo-item.component.css',
 })
 export class TodoItemComponent {
-  constructor(private todoService: TodoService) {}
+  constructor(private todoService: TodoService, private jwtService: JwtService) {}
   @Input() todo!: Todo;
   @Output() delete = new EventEmitter<string>();
   @Output() toggleComplete = new EventEmitter<string>();
@@ -18,7 +19,7 @@ export class TodoItemComponent {
   @Output() edit = new EventEmitter<Todo>(); // Cambia il tipo da string a Todo
   @ViewChild('todoItem') todoItem!: ElementRef; // Riferimento all'elemento DOM
   // Variables
-  token = localStorage.getItem('token');
+  token = this.jwtService.getToken();
   userObj = localStorage.getItem('user');
   user: User = JSON.parse(this.userObj!);
   fullName: string = '';

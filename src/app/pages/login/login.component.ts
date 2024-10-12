@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser'; // Importa il servizio Title
+import { JwtService } from '../../services/jwt.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,12 @@ import { Title } from '@angular/platform-browser'; // Importa il servizio Title
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  constructor(private authService: AuthService, private router: Router, private titleSrv: Title) {}
+  constructor(
+    private authService: AuthService,
+    private jwtService: JwtService,
+    private router: Router,
+    private titleSrv: Title
+  ) {}
   username: string = '';
   password: string = '';
   passwordVisible: boolean = false;
@@ -23,7 +29,7 @@ export class LoginComponent {
     this.authService.login(this.username, this.password).subscribe(
       () => {
         const user = this.authService.getUser();
-        const token = this.authService.getToken();
+        const token = this.jwtService.getToken();
         this.router.navigate(['/app/dashboard']);
       },
       (err: any) => {

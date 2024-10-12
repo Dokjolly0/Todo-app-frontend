@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { switchMap } from 'rxjs/operators';
 import { dateStringToIsoString } from '../../utils/functions/fixDate';
+import { JwtService } from '../../services/jwt.service';
 
 @Component({
   selector: 'app-edit-todo',
@@ -13,9 +14,9 @@ import { dateStringToIsoString } from '../../utils/functions/fixDate';
   styleUrls: ['./edit-todo.component.css'],
 })
 export class EditTodoComponent {
-  constructor(private userService: UserService, private todoService: TodoService) {}
+  constructor(private userService: UserService, private todoService: TodoService, private jwtService: JwtService) {}
   @Input() todo!: Todo;
-  token = localStorage.getItem('token');
+  token = this.jwtService.getToken();
   @Input() users: User[] = [];
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Todo>();

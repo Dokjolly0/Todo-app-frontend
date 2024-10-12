@@ -3,6 +3,7 @@ import { TodoService } from '../../services/todo.service';
 import { AuthService } from '../../services/auth.service';
 import { Todo } from '../../entity/todo.entity';
 import { Title } from '@angular/platform-browser'; //Title service
+import { JwtService } from '../../services/jwt.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,13 +11,13 @@ import { Title } from '@angular/platform-browser'; //Title service
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
-  constructor(private todoService: TodoService, private authService: AuthService, private titleSrv: Title) {}
+  constructor(private todoService: TodoService, private jwtService: JwtService, private titleSrv: Title) {}
   pageTitle = 'Dashboard';
   addTodoPopup = false;
   editTodoPopup = false;
   selectedTodo!: Todo;
   todos: Todo[] = [];
-  token = this.authService.getToken();
+  token = this.jwtService.getToken();
   showUncompletedOnly = true; // Di default, mostra solo i non completati (checkbox fleggata)
 
   ngOnInit(): void {
