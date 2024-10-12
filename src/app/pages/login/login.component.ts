@@ -20,13 +20,14 @@ export class LoginComponent {
   password: string = '';
   passwordVisible: boolean = false;
   pageTitle = 'Login todo app';
+  rememberMe: boolean = false;
 
   ngOnInit(): void {
     this.titleSrv.setTitle(this.pageTitle);
   }
 
   login() {
-    this.authService.login(this.username, this.password).subscribe(
+    this.authService.login(this.username, this.password, this.rememberMe).subscribe(
       () => {
         this.router.navigate(['/app/dashboard']);
       },

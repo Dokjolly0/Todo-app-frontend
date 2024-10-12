@@ -19,9 +19,9 @@ export class AuthService {
   url: string = environment.apiUrl;
   currentUser$ = this._currentUser$.asObservable();
 
-  login(username: string, password: string): Observable<any> {
+  login(username: string, password: string, rememberMe: boolean = false): Observable<any> {
     return this.http.post<any>(`${this.url}/login`, { username, password }).pipe(
-      tap((res) => this.jwtService.setToken(res.token)),
+      tap((res) => this.jwtService.setToken(res.token, rememberMe)), // Passiamo "rememberMe" al JwtService
       tap((res) => this._currentUser$.next(res.user)),
       map((res) => res.user)
     );
