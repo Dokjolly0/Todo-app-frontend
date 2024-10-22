@@ -17,7 +17,11 @@ import { UserAvatarComponent } from './components/user-avatar/user-avatar.compon
 import { EditTodoComponent } from './components/edit-todo/edit-todo.component';
 import { HomeRedirectComponent } from './components/home-redirect/home-redirect.component';
 import { EyesIconComponent } from './components/eyes-icon/eyes-icon.component';
-import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { RequestResetPasswordComponent } from './pages/request-reset-password/request-reset-password.component';
+import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.component';
+import { ConfirmEmailFailedComponent } from './pages/confirm-email-failed/confirm-email-failed.component';
+import { PasswordResetWithEmailComponent } from './pages/password-reset-with-email/password-reset-with-email.component';
+import { SuccessPopupComponent } from './components/succes-popup/success-popup.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
     EditTodoComponent,
     HomeRedirectComponent,
     EyesIconComponent,
-    ResetPasswordComponent,
+    RequestResetPasswordComponent,
+    ConfirmEmailComponent,
+    ConfirmEmailFailedComponent,
+    PasswordResetWithEmailComponent,
+    SuccessPopupComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, NgbModule],
   providers: [

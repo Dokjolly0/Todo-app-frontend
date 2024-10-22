@@ -1,0 +1,29 @@
+.font-type {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: x-large;
+}
+
+.title {
+  font-size: 2.5em !important;
+  color: #ec9552;
+  font-weight: 300 !important;
+  line-height: 1;
+}
+
+img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.btn-warning {
+  background-color: #ec9552;
+  color: white;
+  border: none;
+  box-shadow: 0 2px 2px rgb(209, 203, 203) !important;
+  width: 20%;
+}
+
+.btn-warning:hover {
+  background-color: #c9702c;
+}

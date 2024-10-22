@@ -6,7 +6,10 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { authGuard } from './guards/auth.guard'; // Assicurati che sia importato correttamente
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { HomeRedirectComponent } from './components/home-redirect/home-redirect.component';
-import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { RequestResetPasswordComponent } from './pages/request-reset-password/request-reset-password.component';
+import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.component';
+import { ConfirmEmailFailedComponent } from './pages/confirm-email-failed/confirm-email-failed.component';
+import { PasswordResetWithEmailComponent } from './pages/password-reset-with-email/password-reset-with-email.component';
 
 const routes: Routes = [
   // Rotta root che utilizza il RedirectComponent
@@ -26,8 +29,25 @@ const routes: Routes = [
   // Register
   { path: 'signup', component: RegisterComponent },
   { path: 'register', redirectTo: 'signup' },
-  // Reset password
-  { path: 'reset-password', component: ResetPasswordComponent },
+  // // Reset password
+  // { path: 'reset-password', component: requestResetPasswordComponent },
+  // Confirm email
+  {
+    path: 'confirm-email',
+    component: ConfirmEmailComponent,
+  },
+  {
+    path: 'confirm-email-failed',
+    component: ConfirmEmailFailedComponent,
+  },
+  {
+    path: 'request-reset-password',
+    component: RequestResetPasswordComponent,
+  },
+  {
+    path: 'reset-password-with-email',
+    component: PasswordResetWithEmailComponent,
+  },
   // Gestione della rotta 404
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' },
@@ -38,46 +58,3 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
-
-// import { NgModule } from '@angular/core';
-// import { RouterModule, Routes } from '@angular/router';
-// import { LoginComponent } from './pages/login/login.component';
-// import { RegisterComponent } from './pages/register/register.component';
-// import { DashboardComponent } from './pages/dashboard/dashboard.component';
-// import { authGuard } from './guards/auth.guard'; // Assicurati che questo sia importato correttamente
-// import { NotFoundComponent } from './pages/not-found/not-found.component';
-
-// const routes: Routes = [
-//   //Protected routes
-//   {
-//     path: 'app/dashboard',
-//     component: DashboardComponent,
-//     canActivate: [authGuard], // Protezione della rotta 'app/dashboard'
-//   },
-//   {
-//     path: '',
-//     canActivate: [authGuard], // Protezione della root path
-//     children: [
-//       {
-//         path: '',
-//         redirectTo: 'app/dashboard',
-//         pathMatch: 'full',
-//       },
-//     ],
-//   },
-//   //Login
-//   { path: 'signin', component: LoginComponent },
-//   { path: 'login', redirectTo: 'signin' },
-//   //Register
-//   { path: 'signup', component: RegisterComponent },
-//   { path: 'register', redirectTo: 'signup' },
-//   //Any
-//   { path: '404', component: NotFoundComponent },
-//   { path: '**', redirectTo: '404' }, // Gestione della rotta 404
-// ];
-
-// @NgModule({
-//   imports: [RouterModule.forRoot(routes)],
-//   exports: [RouterModule],
-// })
-// export class AppRoutingModule {}

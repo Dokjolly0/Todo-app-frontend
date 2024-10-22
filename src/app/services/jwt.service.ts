@@ -13,6 +13,7 @@ export class JwtService {
   }
 
   getToken() {
+    // Restituisce il token da localStorage se presente, altrimenti da sessionStorage
     return localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
   }
 

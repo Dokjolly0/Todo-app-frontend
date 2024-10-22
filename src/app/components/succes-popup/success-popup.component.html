@@ -1,0 +1,10 @@
+<div class="overlay" id="successPopup" *ngIf="show" (click)="closePopup()">
+  <div class="popup" (click)="$event.stopPropagation()">
+    <svg class="checkmark" viewBox="0 0 60 60">
+      <circle class="circle" cx="30" cy="30" r="25" />
+      <path class="check" d="M20 30l7 7 13-13" />
+    </svg>
+    <p>{{ message }}</p>
+    <button (click)="closePopup()">Chiudi</button>
+  </div>
+</div>
