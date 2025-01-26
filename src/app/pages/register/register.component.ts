@@ -51,24 +51,31 @@ export class RegisterComponent {
         img.src = e.target.result;
 
         img.onload = () => {
-          // Calcoliamo il lato più corto tra larghezza e altezza per creare un quadrato
+          // Calcoliamo il lato più corto tra larghezza e altezza
           const size = Math.min(img.width, img.height);
-          const offsetX = (img.width - size) / 2; // Calcoliamo il ritaglio orizzontale
-          const offsetY = (img.height - size) / 2; // Calcoliamo il ritaglio verticale
+          const offsetX = (img.width - size) / 2; // Ritaglio orizzontale
+          const offsetY = (img.height - size) / 2; // Ritaglio verticale
 
-          // Creiamo una canvas per il ritaglio
+          // Creiamo un canvas per il ritaglio circolare
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
           canvas.width = size;
           canvas.height = size;
+
+          // Disegniamo il cerchio
+          ctx?.beginPath();
+          ctx?.arc(size / 2, size / 2, size / 2, 0, 2 * Math.PI);
+          ctx?.clip();
+
+          // Disegniamo l'immagine all'interno del cerchio
           ctx?.drawImage(img, offsetX, offsetY, size, size, 0, 0, size, size);
 
-          // Convertiamo il risultato della canvas in base64 per visualizzarlo
+          // Convertiamo il risultato del canvas in base64
           this.registerData.picture = canvas.toDataURL();
         };
       };
 
-      reader.readAsDataURL(file); // Leggiamo il file come data URL
+      reader.readAsDataURL(file);
     } else {
       this.registerData.picture = ''; // Reset se non c'è nessun file
     }
@@ -80,24 +87,27 @@ export class RegisterComponent {
       img.src = this.registerData.picture;
 
       img.onload = () => {
-        // Calcoliamo il lato più corto tra larghezza e altezza per creare un quadrato
         const size = Math.min(img.width, img.height);
-        const offsetX = (img.width - size) / 2; // Calcoliamo il ritaglio orizzontale
-        const offsetY = (img.height - size) / 2; // Calcoliamo il ritaglio verticale
+        const offsetX = (img.width - size) / 2; // Ritaglio orizzontale
+        const offsetY = (img.height - size) / 2; // Ritaglio verticale
 
-        // Creiamo una canvas per il ritaglio
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = size;
         canvas.height = size;
+
+        ctx?.beginPath();
+        ctx?.arc(size / 2, size / 2, size / 2, 0, 2 * Math.PI);
+        ctx?.clip();
+
         ctx?.drawImage(img, offsetX, offsetY, size, size, 0, 0, size, size);
 
-        // Convertiamo il risultato della canvas in base64 per visualizzarlo
         this.registerData.picture = canvas.toDataURL();
       };
 
       img.onerror = () => {
         console.error('Invalid image URL');
+        this.validUrlPicture = false;
       };
     }
   }
