@@ -42,6 +42,10 @@ export class AuthService {
   logout() {
     this.jwtService.removeToken();
     this._currentUser$.next(null);
-    this.router.navigate(['/signin']);
+
+    // Aspetta che il token sia completamente rimosso prima di navigare
+    setTimeout(() => {
+      this.router.navigate(['/signin']);
+    }, 0);
   }
 }

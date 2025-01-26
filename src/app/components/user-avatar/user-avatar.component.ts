@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { JwtService } from '../../services/jwt.service';
@@ -8,7 +8,7 @@ import { JwtService } from '../../services/jwt.service';
   templateUrl: './user-avatar.component.html',
   styleUrls: ['./user-avatar.component.css'],
 })
-export class UserAvatarComponent implements OnInit {
+export class UserAvatarComponent implements OnInit, OnDestroy {
   @Input() user: any = {
     firstName: '',
     lastName: '',
@@ -19,6 +19,7 @@ export class UserAvatarComponent implements OnInit {
   userInitials: string = ''; // Iniziali nome e cognome
   useDefaultAvatar: boolean = false; // Controlla se mostrare le iniziali invece dell'immagine
   userPictureUrl: SafeUrl | null = null; // URL sicuro per mostrare l'immagine
+  refreshInterval: any; // Memorizza l'intervallo per il refresh
 
   constructor(private userService: UserService, private sanitizer: DomSanitizer, private jwtSrv: JwtService) {}
 
@@ -30,6 +31,18 @@ export class UserAvatarComponent implements OnInit {
       this.userInitials = this.getInitials(this.user.firstName, this.user.lastName);
       this.loadUserPicture();
     }
+
+    // Imposta un intervallo per aggiornare l'immagine ogni 5 secondi
+    this.refreshInterval = setInterval(() => {
+      this.loadUserPicture();
+    }, 500);
+  }
+
+  ngOnDestroy() {
+    // Cancella l'intervallo quando il componente viene distrutto
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+    }
   }
 
   getInitials(firstName: string, lastName: string): string {
@@ -38,7 +51,6 @@ export class UserAvatarComponent implements OnInit {
 
   loadUserPicture() {
     const token = this.jwtSrv.getToken(); // Recupera il token dal localStorage
-    console.log('Token:', token);
     if (token) {
       this.userService.getUserPicture(token).subscribe(
         (response) => {

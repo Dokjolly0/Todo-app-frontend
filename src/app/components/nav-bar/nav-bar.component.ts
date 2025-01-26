@@ -45,7 +45,6 @@ export class NavBarComponent {
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['signin']);
   }
 
   @HostListener('document:click', ['$event'])
