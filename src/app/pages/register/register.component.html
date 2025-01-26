@@ -1,9 +1,14 @@
 <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+  <!-- Contenitore principale per il modulo di registrazione -->
   <div class="login-box card p-4 shadow-lg">
+    <!-- Intestazione del modulo -->
     <div class="login-header">
       <h2 class="text-center">Register</h2>
     </div>
+
+    <!-- Form di registrazione -->
     <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+      <!-- Nome -->
       <div class="mb-3">
         <div *ngIf="registerForm.submitted && !registerData.firstName" class="error-message">Name is required</div>
         <input
@@ -17,6 +22,7 @@
         />
       </div>
 
+      <!-- Cognome -->
       <div class="mb-3">
         <div *ngIf="registerForm.submitted && !registerData.lastName" class="error-message">Surname is required</div>
         <input
@@ -30,22 +36,7 @@
         />
       </div>
 
-      <div class="mb-3">
-        <div *ngIf="(registerForm.submitted && !registerData.picture) || !validUrlPicture" class="error-message">
-          Picture URL is required and must be a valid URL
-        </div>
-        <input
-          type="url"
-          class="form-control"
-          placeholder="Picture"
-          [(ngModel)]="registerData.picture"
-          (ngModelChange)="validateUrlPicture()"
-          name="picture"
-          autocomplete="off"
-          required
-        />
-      </div>
-
+      <!-- Username (Email) -->
       <div class="mb-3">
         <div *ngIf="(registerForm.submitted && !registerData.username) || !validEmailUsername" class="error-message">
           Username is required and must be a valid email
@@ -62,7 +53,7 @@
         />
       </div>
 
-      <!-- Campo Password -->
+      <!-- Password -->
       <div class="mb-3 position-relative">
         <div
           *ngIf="registerForm.submitted && (!registerData.password || registerData.password.length < 8)"
@@ -88,7 +79,7 @@
         </div>
       </div>
 
-      <!-- Campo Conferma Password -->
+      <!-- Conferma Password -->
       <div class="mb-3 position-relative">
         <div *ngIf="registerForm.submitted && checkPassword !== registerData.password" class="error-message">
           Passwords do not match
@@ -100,7 +91,7 @@
           <input
             type="password"
             class="form-control"
-            placeholder="Check password"
+            placeholder="Confirm password"
             [(ngModel)]="checkPassword"
             name="checkPassword"
             autocomplete="off"
@@ -114,10 +105,88 @@
         </div>
       </div>
 
+      <!-- Selezione Avatar -->
+      <div class="mb-3 avatar">
+        <label for="pictureChoice" class="form-label">Choose Avatar</label>
+        <div class="d-flex gap-3">
+          <div class="form-check">
+            <input
+              type="radio"
+              id="no-photo-option"
+              class="form-check-input"
+              name="pictureChoice"
+              [(ngModel)]="pictureChoice"
+              value="none"
+            />
+            <label for="no-photo-option" class="form-check-label">No Photo</label>
+          </div>
+          <div class="form-check">
+            <input
+              type="radio"
+              id="upload-option"
+              class="form-check-input"
+              name="pictureChoice"
+              [(ngModel)]="pictureChoice"
+              value="upload"
+            />
+            <label for="upload-option" class="form-check-label">Upload</label>
+          </div>
+          <div class="form-check">
+            <input
+              type="radio"
+              id="url-option"
+              class="form-check-input"
+              name="pictureChoice"
+              [(ngModel)]="pictureChoice"
+              value="url"
+            />
+            <label for="url-option" class="form-check-label">URL</label>
+          </div>
+        </div>
+
+        <!-- Opzione Upload -->
+        <div *ngIf="pictureChoice === 'upload'" class="mt-2">
+          <input type="file" id="avatar-upload" class="form-control" (change)="onFileChange($event)" accept="image/*" />
+          <div class="mt-2">
+            <img
+              *ngIf="registerData.picture"
+              [src]="registerData.picture"
+              alt="Uploaded avatar"
+              class="avatar-preview border"
+            />
+          </div>
+        </div>
+
+        <!-- Opzione URL -->
+        <div *ngIf="pictureChoice === 'url'" class="mt-2">
+          <input
+            type="url"
+            id="avatar-url"
+            class="form-control"
+            placeholder="Enter image URL"
+            [(ngModel)]="registerData.picture"
+            (ngModelChange)="onUrlChange()"
+            name="picture"
+            autocomplete="off"
+          />
+          <div *ngIf="!validUrlPicture && registerForm.submitted" class="error-message mt-1">Invalid URL</div>
+          <div class="mt-2">
+            <img
+              *ngIf="registerData.picture"
+              [src]="registerData.picture"
+              alt="URL avatar"
+              class="avatar-preview border"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottone di invio -->
       <div class="d-grid mb-3">
         <button type="submit" class="btn btn-dark">Sign Up</button>
       </div>
 
+      <!-- Link per il login -->
       <div class="text-center">
         <p>
           Have an account?
@@ -127,3 +196,10 @@
     </form>
   </div>
 </div>
+
+<!-- Popup di successo -->
+<app-success-popup
+  [show]="showSuccessAlert"
+  [message]="'Controlla la tua email per attivare l\'account.'"
+  (closed)="closeAlert()"
+></app-success-popup>

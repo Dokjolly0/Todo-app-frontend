@@ -1,8 +1,8 @@
 <div *ngIf="user">
   <div class="user-icon-container" [style.width.px]="size" [style.height.px]="size">
     <img
-      *ngIf="!useDefaultAvatar; else defaultIcon"
-      [src]="user.picture"
+      *ngIf="userPictureUrl && !useDefaultAvatar; else defaultIcon"
+      [src]="userPictureUrl"
       alt="User Avatar"
       class="user-avatar"
       (error)="showDefaultAvatar()"

@@ -45,6 +45,10 @@
       <div class="d-grid">
         <button type="submit" class="btn btn-dark btn-lg">Login</button>
       </div>
+      <!-- Mostra il messaggio di errore se presente -->
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
       <div class="text-center mt-3">
         <p>
           Don't have an account?

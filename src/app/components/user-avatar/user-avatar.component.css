@@ -16,9 +16,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: calc(
-    0.6 * var(--size, 32px)
-  ); /* Testo proporzionato alla dimensione */
+  font-size: calc(0.6 * var(--size, 32px)); /* Testo proporzionato alla dimensione */
   color: #fff;
   background-color: #4285f4;
   border-radius: 50%;

@@ -39,4 +39,9 @@ export class UserService {
     const userJson = localStorage.getItem('user');
     return userJson ? JSON.parse(userJson) : null;
   }
+
+  getUserPicture(token: string): Observable<Blob> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/users/picture`, { headers, responseType: 'blob' }); // Ottieni l'immagine come Blob
+  }
 }
