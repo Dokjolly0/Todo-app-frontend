@@ -42,6 +42,13 @@ export class UserService {
 
   getUserPicture(token: string): Observable<Blob> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(`${this.url}/users/picture`, { headers, responseType: 'blob' }); // Ottieni l'immagine come Blob
+    return this.http.get(`${this.url}/users/picture`, { headers, responseType: 'blob' });
+    /* TODO */
+    // File upload express
+    // File upload angular
+    // Autenticare le chiamate per il download delle immagini
+
+    // https://www.npmjs.com/package/express-fileupload
+    // https://www.npmjs.com/package/angular-file-upload
   }
 }

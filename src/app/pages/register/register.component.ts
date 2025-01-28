@@ -29,6 +29,7 @@ export class RegisterComponent {
   validUrlPicture: boolean = true;
   validEmailUsername: boolean = true;
   isvalidPicture: boolean = false;
+  formSubmitted: boolean = false;
 
   ngOnInit(): void {
     this.titleSrv.setTitle(this.pageTitle);
@@ -147,6 +148,10 @@ export class RegisterComponent {
   }
 
   updateErrorMessages() {
+    if (!this.formSubmitted) {
+      return; // Se il modulo non è stato inviato, non aggiornare gli errori
+    }
+
     // Funzione di utilità per aggiungere un errore solo se non è già presente
     const addErrorIfNotExists = (error: string) => {
       if (!this.errorMessages.includes(error)) {
@@ -199,6 +204,7 @@ export class RegisterComponent {
 
   // Metodo per la registrazione
   async register(form: NgForm) {
+    this.formSubmitted = true; // Indica che il modulo è stato inviato
     this.errorMessages = []; // Resetta gli errori all'inizio
 
     await this.validateUrlPicture(); // Attendi la validazione dell'URL

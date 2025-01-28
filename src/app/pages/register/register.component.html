@@ -197,7 +197,7 @@
       </div>
 
       <!-- Mostra il messaggio di errore se presente -->
-      <div *ngIf="errorMessages.length > 0" class="alert alert-danger mt-3">
+      <div *ngIf="errorMessages.length > 0 && formSubmitted" class="alert alert-danger mt-3">
         <ul>
           <li *ngFor="let error of errorMessages">{{ error }}</li>
         </ul>
