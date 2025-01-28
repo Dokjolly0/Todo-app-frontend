@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -12,7 +12,7 @@ import { SuccessPopupComponent } from '../../components/succes-popup/success-pop
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   constructor(private authService: AuthService, private router: Router, private titleSrv: Title) {}
@@ -21,25 +21,32 @@ export class RegisterComponent {
   pageTitle = 'Register todo app';
   showSuccessAlert: boolean = false;
   pictureChoice: string = 'url'; // Opzione predefinita
-  registerData: RegisterData = {
-    firstName: '',
-    lastName: '',
-    picture: '',
-    username: '',
-    password: '',
-  };
+  errorMessages: string[] = [];
+  registerData: RegisterData = this.resetRegisterData();
   checkPassword: string = '';
   passwordVisible: boolean = false;
   passwordCheckVisible: boolean = false;
   validUrlPicture: boolean = true;
   validEmailUsername: boolean = true;
+  isvalidPicture: boolean = false;
 
-  // OnInit
   ngOnInit(): void {
     this.titleSrv.setTitle(this.pageTitle);
   }
 
-  // Metodo onFileChange aggiornato per gestire il reset dell'immagine
+  private resetRegisterData(): RegisterData {
+    return {
+      firstName: '',
+      lastName: '',
+      picture: '',
+      username: '',
+      password: '',
+    };
+  }
+
+  /**
+   * Metodo per il caricamento delle immagini da file.
+   */
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -72,17 +79,29 @@ export class RegisterComponent {
 
           // Convertiamo il risultato del canvas in base64
           this.registerData.picture = canvas.toDataURL();
+          this.validateEmailUsername();
         };
       };
 
       reader.readAsDataURL(file);
     } else {
       this.registerData.picture = ''; // Reset se non c'è nessun file
+      this.validateEmailUsername();
     }
   }
 
-  onUrlChange() {
+  /**
+   * Metodo per il caricamento delle immagini da URL.
+   */
+  async onUrlChange() {
     if (this.registerData.picture) {
+      this.isvalidPicture = await isValidUrl(this.registerData.picture); // Controlla se l'immagine è valida
+      if (!this.isvalidPicture) {
+        this.validUrlPicture = false;
+        return; // Interrompi l'esecuzione se l'URL non è valido
+      }
+
+      this.validUrlPicture = true; // Se l'URL è valido, procedi
       const img = new Image();
       img.src = this.registerData.picture;
 
@@ -103,24 +122,23 @@ export class RegisterComponent {
         ctx?.drawImage(img, offsetX, offsetY, size, size, 0, 0, size, size);
 
         this.registerData.picture = canvas.toDataURL();
+        this.validateEmailUsername();
       };
 
       img.onerror = () => {
         console.error('Invalid image URL');
         this.validUrlPicture = false;
+        this.validateEmailUsername();
       };
     }
   }
 
-  // Metodo di reset per 'No Photo'
   resetPicture() {
     this.registerData.picture = '';
   }
 
-  // Metodo per validare l'URL dell'immagine
-  validateUrlPicture() {
-    //this.validUrlPicture = isValidUrl(this.registerData.picture);
-    this.validUrlPicture = true;
+  async validateUrlPicture() {
+    this.validUrlPicture = await isValidUrl(this.registerData.picture);
   }
 
   // Metodo per validare l'email
@@ -128,18 +146,66 @@ export class RegisterComponent {
     this.validEmailUsername = isValidEmail(this.registerData.username);
   }
 
+  updateErrorMessages() {
+    // Funzione di utilità per aggiungere un errore solo se non è già presente
+    const addErrorIfNotExists = (error: string) => {
+      if (!this.errorMessages.includes(error)) {
+        this.errorMessages.push(error);
+      }
+    };
+
+    this.errorMessages = []; // Resetta gli errori ad ogni aggiornamento
+
+    // Verifica i campi dinamicamente
+    if (!this.registerData.firstName) {
+      addErrorIfNotExists('Name is required');
+    }
+
+    if (!this.registerData.lastName) {
+      addErrorIfNotExists('Surname is required');
+    }
+
+    if (!this.registerData.username || !this.validEmailUsername) {
+      addErrorIfNotExists('Username is required and must be a valid email');
+    }
+
+    if (!this.registerData.password || this.registerData.password.length < 8) {
+      addErrorIfNotExists('Password must be at least 8 characters');
+    }
+
+    if (this.checkPassword !== this.registerData.password) {
+      addErrorIfNotExists('Passwords do not match');
+    }
+
+    if (this.checkPassword.length < 8) {
+      addErrorIfNotExists('Password confirmation must be at least 8 characters');
+    }
+
+    if (!this.validUrlPicture && this.pictureChoice !== 'none') {
+      addErrorIfNotExists('Invalid image URL');
+    }
+
+    // Verifica immagine solo se non è selezionata l'opzione "No Photo"
+    if (this.pictureChoice !== 'none') {
+      if (!this.validUrlPicture) {
+        addErrorIfNotExists('Invalid image URL');
+      }
+
+      if (!this.registerData.picture) {
+        addErrorIfNotExists('Please upload a photo or select "No Photo".');
+      }
+    }
+  }
+
   // Metodo per la registrazione
   async register(form: NgForm) {
-    this.validateUrlPicture();
+    this.errorMessages = []; // Resetta gli errori all'inizio
+
+    await this.validateUrlPicture(); // Attendi la validazione dell'URL
     this.validateEmailUsername();
+    this.updateErrorMessages(); // Aggiungi gli errori alla lista
 
-    const condition =
-      form.valid &&
-      this.validUrlPicture &&
-      this.validEmailUsername &&
-      this.checkPassword === this.registerData.password;
-
-    if (condition) {
+    if (form.valid && this.errorMessages.length === 0) {
       this.authService
         .register(this.registerData)
         .pipe(
@@ -176,7 +242,27 @@ export class RegisterComponent {
   closeAlert() {
     this.showSuccessAlert = false;
     setTimeout(() => {}, 5000);
-    console.log('Redirecting to dashboard...');
     this.router.navigate(['/signin']);
   }
 }
+
+// fixFormHeight(): void {
+//   setTimeout(() => {
+//     const registerBox = document.querySelector('.register-box') as HTMLElement;
+//     const formHeight = registerBox.offsetHeight;
+//     console.log('Form height:', formHeight);
+//     if (formHeight >= 880) {
+//       registerBox.style.marginTop = '300px';
+//       console.log('1. Form height:', formHeight);
+//     } else if (formHeight >= 860 && formHeight < 880) {
+//       registerBox.style.marginTop = '280px';
+//       console.log('2. Form height:', formHeight);
+//     } else if (formHeight >= 835 && formHeight < 860) {
+//       registerBox.style.marginTop = '255px';
+//       console.log('3. Form height:', formHeight);
+//     } else if (formHeight >= 790 && formHeight < 835) {
+//       registerBox.style.marginTop = '210px';
+//       console.log('4. Form height:', formHeight);
+//     }
+//   }, 0); // Ritarda di 0ms per aspettare il completamento del ciclo di rendering
+// }

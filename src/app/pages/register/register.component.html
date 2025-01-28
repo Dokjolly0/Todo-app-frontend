@@ -1,21 +1,29 @@
-<div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+<!-- vh-100 -->
+<div class="container-fluid d-flex align-items-center justify-content-center body">
   <!-- Contenitore principale per il modulo di registrazione -->
-  <div class="login-box card p-4 shadow-lg">
+  <div class="register-box card p-4 shadow-lg">
     <!-- Intestazione del modulo -->
-    <div class="login-header">
+    <div class="register-header">
       <h2 class="text-center">Register</h2>
     </div>
 
     <!-- Form di registrazione -->
     <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+      <!-- Mostra il messaggio di errore se presente -->
+      <!-- <div *ngIf="errorMessages.length > 0" class="alert alert-danger mt-3">
+        <ul>
+          <li *ngFor="let error of errorMessages">{{ error }}</li>
+        </ul>
+      </div> -->
       <!-- Nome -->
       <div class="mb-3">
-        <div *ngIf="registerForm.submitted && !registerData.firstName" class="error-message">Name is required</div>
+        <!-- <div *ngIf="registerForm.submitted && !registerData.firstName" class="error-message">Name is required</div> -->
         <input
           type="text"
           class="form-control"
           placeholder="Name"
           [(ngModel)]="registerData.firstName"
+          (ngModelChange)="updateErrorMessages()"
           name="firstName"
           autocomplete="off"
           required
@@ -24,12 +32,13 @@
 
       <!-- Cognome -->
       <div class="mb-3">
-        <div *ngIf="registerForm.submitted && !registerData.lastName" class="error-message">Surname is required</div>
+        <!-- <div *ngIf="registerForm.submitted && !registerData.lastName" class="error-message">Surname is required</div> -->
         <input
           type="text"
           class="form-control"
           placeholder="Surname"
           [(ngModel)]="registerData.lastName"
+          (ngModelChange)="updateErrorMessages()"
           name="lastName"
           autocomplete="off"
           required
@@ -38,15 +47,16 @@
 
       <!-- Username (Email) -->
       <div class="mb-3">
-        <div *ngIf="(registerForm.submitted && !registerData.username) || !validEmailUsername" class="error-message">
+        <!-- <div *ngIf="(registerForm.submitted && !registerData.username) || !validEmailUsername" class="error-message">
           Username is required and must be a valid email
-        </div>
+        </div> -->
         <input
           type="email"
           class="form-control"
           placeholder="Username"
           [(ngModel)]="registerData.username"
           (ngModelChange)="validateEmailUsername()"
+          (ngModelChange)="updateErrorMessages()"
           name="username"
           autocomplete="off"
           required
@@ -55,18 +65,19 @@
 
       <!-- Password -->
       <div class="mb-3 position-relative">
-        <div
+        <!-- <div
           *ngIf="registerForm.submitted && (!registerData.password || registerData.password.length < 8)"
           class="error-message"
         >
           Password must be at least 8 characters
-        </div>
+        </div> -->
         <div class="position-relative">
           <input
             type="password"
             class="form-control"
             placeholder="Password"
             [(ngModel)]="registerData.password"
+            (ngModelChange)="updateErrorMessages()"
             name="password"
             autocomplete="off"
             required
@@ -81,18 +92,19 @@
 
       <!-- Conferma Password -->
       <div class="mb-3 position-relative">
-        <div *ngIf="registerForm.submitted && checkPassword !== registerData.password" class="error-message">
+        <!-- <div *ngIf="registerForm.submitted && checkPassword !== registerData.password" class="error-message">
           Passwords do not match
         </div>
         <div *ngIf="registerForm.submitted && checkPassword.length < 8" class="error-message">
           Password confirmation must be at least 8 characters
-        </div>
+        </div> -->
         <div class="position-relative">
           <input
             type="password"
             class="form-control"
             placeholder="Confirm password"
             [(ngModel)]="checkPassword"
+            (ngModelChange)="updateErrorMessages()"
             name="checkPassword"
             autocomplete="off"
             required
@@ -116,6 +128,7 @@
               class="form-check-input"
               name="pictureChoice"
               [(ngModel)]="pictureChoice"
+              (ngModelChange)="updateErrorMessages()"
               value="none"
             />
             <label for="no-photo-option" class="form-check-label">No Photo</label>
@@ -127,6 +140,7 @@
               class="form-check-input"
               name="pictureChoice"
               [(ngModel)]="pictureChoice"
+              (ngModelChange)="updateErrorMessages()"
               value="upload"
             />
             <label for="upload-option" class="form-check-label">Upload</label>
@@ -138,6 +152,7 @@
               class="form-check-input"
               name="pictureChoice"
               [(ngModel)]="pictureChoice"
+              (ngModelChange)="updateErrorMessages()"
               value="url"
             />
             <label for="url-option" class="form-check-label">URL</label>
@@ -169,16 +184,23 @@
             name="picture"
             autocomplete="off"
           />
-          <div *ngIf="!validUrlPicture && registerForm.submitted" class="error-message mt-1">Invalid URL</div>
+          <!-- <div *ngIf="!validUrlPicture && registerForm.submitted" class="error-message mt-1">Invalid URL</div> -->
           <div class="mt-2">
             <img
-              *ngIf="registerData.picture"
+              *ngIf="registerData.picture && isvalidPicture"
               [src]="registerData.picture"
               alt="URL avatar"
               class="avatar-preview border"
             />
           </div>
         </div>
+      </div>
+
+      <!-- Mostra il messaggio di errore se presente -->
+      <div *ngIf="errorMessages.length > 0" class="alert alert-danger mt-3">
+        <ul>
+          <li *ngFor="let error of errorMessages">{{ error }}</li>
+        </ul>
       </div>
 
       <!-- Bottone di invio -->

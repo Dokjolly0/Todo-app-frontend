@@ -1,18 +1,10 @@
-export function isValidUrl(urlString: string): boolean {
-  // Definisce un pattern di URL che accetta solo protocolli http e https.
-  const urlPattern = /^(https?):\/\/[^\s$.?#].[^\s]*$/i;
+export async function isValidUrl(urlString: string): Promise<boolean> {
+  // Verifica se l'URL punta a un'immagine valida
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = urlString;
 
-  try {
-    // Crea un oggetto URL per verificare la validità.
-    const url = new URL(urlString);
-
-    // Verifica se il protocollo è http o https e se l'URL corrisponde al pattern.
-    return (
-      (url.protocol === 'http:' || url.protocol === 'https:') &&
-      urlPattern.test(urlString)
-    );
-  } catch {
-    // Se l'URL non è valido, cattura l'eccezione e ritorna false.
-    return false;
-  }
+    img.onload = () => resolve(true); // Se l'immagine viene caricata con successo
+    img.onerror = () => resolve(false); // Se c'è un errore nel caricamento
+  });
 }
